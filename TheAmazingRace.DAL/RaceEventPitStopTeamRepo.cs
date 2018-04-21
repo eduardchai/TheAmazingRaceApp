@@ -9,16 +9,10 @@ namespace TheAmazingRace.DAL
 {
     public class RaceEventPitStopTeamRepo : BaseRepo<RaceEventPitStopTeam>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
-
-        public RaceEventPitStopTeamRepo()
-        {
-            this.DbContext = dbContext;
-        }
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
         public List<RaceEventPitStopTeam> GetLeaderboard(int raceEventId)
         {
-            TheAmazingRaceDbContext dbContext_2 = new TheAmazingRaceDbContext();
             var query = string.Format(@"
 WITH
 TBL_A AS (
@@ -62,13 +56,18 @@ WHERE RaceEventId = {0}
 ORDER BY RaceEventId, NoOfCompletedStop DESC, CompletedOn
             ", raceEventId);
 
-            var data = dbContext_2.RaceEventPitStopTeam.SqlQuery(query).ToList();
-            return data;
+            try
+            {
+                return dbContext.RaceEventPitStopTeam.SqlQuery(query).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<RaceEventPitStopTeam> GetRaceEventPitStopTeams(int raceEventId)
         {
-            TheAmazingRaceDbContext dbContext_2 = new TheAmazingRaceDbContext();
             var query = string.Format(@"
 SELECT 
 	A.RaceEventId,
@@ -83,8 +82,14 @@ WHERE A.RaceEventId = {0}
 ORDER BY B.Id, A.[Order]
             ", raceEventId);
 
-            var data = dbContext_2.RaceEventPitStopTeam.SqlQuery(query).ToList();
-            return data;
+            try
+            {
+                return dbContext.RaceEventPitStopTeam.SqlQuery(query).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

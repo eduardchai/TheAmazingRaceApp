@@ -19,7 +19,7 @@ namespace TheAmazingRace.BLL
 
         public User GetUserById(string userId)
         {
-            return repo.GetUserById(userId);
+            return repo.GetById(userId);
         }
 
         public bool RemoveUserFromTeam(string userId)
@@ -31,22 +31,27 @@ namespace TheAmazingRace.BLL
             return repo.SaveChanges();
         }
 
-        public List<User> GetAllUsersWithRole(string role)
+        public IEnumerable<User> GetAllByRoleName(string role)
         {
             var roleId = roleRepo.GetRoleIdByName(role);
-            return repo.GetAllUsersWithRole(roleId);
+            return repo.GetAllByRoleId(roleId);
         }
 
-        public List<User> GetAllUsersWithRole(string role, string excludedUserId)
+        public IEnumerable<User> GetAllExcludeByRoleId(string role, string excludedUserId)
         {
             var roleId = roleRepo.GetRoleIdByName(role);
-            return repo.GetAllUsersWithRole(roleId, excludedUserId);
+            return repo.GetAllExcludeByRoleId(roleId, excludedUserId);
         }
 
-        public List<User> GetAllParticipantsWithoutTeam()
+        public IEnumerable<User> GetAllParticipantsWithoutTeam()
         {
             var roleId = roleRepo.GetRoleIdByName("Participant");
-            return repo.GetAllUsersWithoutTeam(roleId);
+            return repo.GetAllWithoutTeamByRoleId(roleId);
+        }
+
+        public IEnumerable<User> GetAllByRaceEventId(int raceEventId)
+        {
+            return repo.GetAllByRaceEventId(raceEventId);
         }
     }
 }

@@ -17,14 +17,16 @@ namespace TheAmazingRace.BLL
             this.Repo = repo;
         }
 
-        public PitStop GetPitStopById(int? id)
+        public PitStop GetById(int? id)
         {
-            return repo.GetPitStopById(id);
-        }
-
-        public List<PitStop> GetAllPitStops()
-        {
-            return repo.GetAllPitStops();
+            if (id != null)
+            {
+                return repo.GetById((int)id);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

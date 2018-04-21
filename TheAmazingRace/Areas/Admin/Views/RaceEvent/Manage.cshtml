@@ -54,7 +54,7 @@
                                     @Html.DisplayFor(modelItem => item.StartLongitude)
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("Monitor", "RaceEvent", new { id = item.Id })" class="btn btn-success"><i class="fa fa-list-alt"></i> <span>Monitor</span></a> &nbsp;
+                                    <a href="@Url.Action("Monitor", "RaceEvent", new { id = item.Id })" class="btn btn-success"><i class="fa fa-eye"></i> <span>Monitor</span></a> &nbsp;
                                     <a href="@Url.Action("ManageRace", "RaceEvent", new { id = item.Id })" class="btn btn-info"><i class="fa fa-list-alt"></i> <span>Manage</span></a> &nbsp;
                                     <a href="@Url.Action("Edit", "RaceEvent", new { id = item.Id })" class="btn btn-warning"><i class="fa fa-edit"></i> <span>Edit</span></a> &nbsp;
                                     <a href="@Url.Action("Delete", "RaceEvent", new { id = item.Id })" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>

@@ -25,4 +25,3 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.Models\obj\Debu
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.Models\obj\Debug\TheAmazingRace.Models.csproj.CopyComplete
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.Models\obj\Debug\TheAmazingRace.Models.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.Models\obj\Debug\TheAmazingRace.Models.pdb
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.Models\obj\Debug\TheAmazingRace.Models.csprojResolveAssemblyReference.cache

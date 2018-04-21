@@ -9,38 +9,49 @@ namespace TheAmazingRace.DAL
 {
     public class TeamRepo : BaseRepo<Team>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
-        public TeamRepo()
+        public Team GetById(int teamId)
         {
-            this.DbContext = dbContext;
-        }
-
-        public Team GetTeamById(int? teamId)
-        {
-            return dbContext.Team.Where(t => t.Id == teamId).First();
-        }
-
-        public List<Team> GetAllTeams()
-        {
-            return dbContext.Team.ToList();
-        }
-
-        public List<Team> GetAllTeams(bool noRaceOnly)
-        {
-            if (noRaceOnly)
+            try
             {
-                return dbContext.Team.Where(t => t.RaceEventId == null).ToList();
+                return dbContext.Team.Where(t => t.Id == teamId).First();
             }
-            else
+            catch (Exception)
             {
-                return dbContext.Team.ToList();
+                throw;
             }
         }
 
-        public List<Team> GetAllTeamsWithRaceEventId(int raceEventId)
+        public IEnumerable<Team> GetAll(bool noRaceOnly)
         {
-            return dbContext.Team.Where(t => t.RaceEventId == raceEventId).ToList();
+            try
+            {
+                if (noRaceOnly)
+                {
+                    return dbContext.Team.Where(t => t.RaceEventId == null).ToList();
+                }
+                else
+                {
+                    return dbContext.Team.ToList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<Team> GetAllByRaceEventId(int raceEventId)
+        {
+            try
+            {
+                return dbContext.Team.Where(t => t.RaceEventId == raceEventId).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

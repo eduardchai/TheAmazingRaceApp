@@ -29,14 +29,12 @@ namespace TheAmazingRace.BLL
 
         public bool CompletePitStop(int raceEventId, int pitStopId, int teamId, int currentPitStopOrder)
         {
-            var data = new RaceEventPitStopTeam
-            {
-                RaceEventId = raceEventId,
-                PitStopId = pitStopId,
-                TeamId = teamId,
-                CompletedOn = DateTime.Now,
-                NoOfCompletedStop = currentPitStopOrder
-            };
+            var data = repo.Create();
+            data.RaceEventId = raceEventId;
+            data.PitStopId = pitStopId;
+            data.TeamId = teamId;
+            data.CompletedOn = DateTime.Now;
+            data.NoOfCompletedStop = currentPitStopOrder;
 
             repo.Add(data);
 

@@ -17,24 +17,61 @@ namespace TheAmazingRace.BLL
             this.Repo = repo;
         }
 
-        public List<Team> GetAllTeams()
+        public IEnumerable<Team> GetAllTeamsWithoutRace()
         {
-            return repo.GetAllTeams();
+            return repo.GetAll(true);
         }
 
-        public List<Team> GetAllTeamsWithoutRace()
+        public Team GetById(int? teamId)
         {
-            return repo.GetAllTeams(true);
+            if(teamId != null)
+            {
+                return repo.GetById((int)teamId);
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public Team GetTeamById(int? teamId)
+        public IEnumerable<Team> GetAllByRaceEventId(int raceEventId)
         {
-            return repo.GetTeamById(teamId);
+            return repo.GetAllByRaceEventId(raceEventId);
         }
 
-        public List<Team> GetAllTeamsWithRaceEventId(int raceEventId)
+        public bool AddTeamToRace(int raceEventId, int teamId, string updateById)
         {
-            return repo.GetAllTeamsWithRaceEventId(raceEventId);
+            var team = GetById(teamId);
+            team.RaceEventId = raceEventId;
+            team.UpdatedOn = DateTime.Now;
+            team.UpdatedById = updateById;
+
+            repo.Update(team);
+
+            return repo.SaveChanges();
+        }
+
+        public bool RemoveTeamFromRace(int raceEventId, int teamId, string updateById)
+        {
+            var team = GetById(teamId);
+            team.RaceEventId = null;
+            team.UpdatedOn = DateTime.Now;
+            team.UpdatedById = updateById;
+
+            repo.Update(team);
+
+            return repo.SaveChanges();
+        }
+
+        public bool UpdateTeamLocation(int teamId, double currLong, double currLat)
+        {
+            var team = GetById(teamId);
+            team.CurrentLong = currLong;
+            team.CurrentLat = currLat;
+
+            repo.Update(team);
+
+            return repo.SaveChanges();
         }
     }
 }

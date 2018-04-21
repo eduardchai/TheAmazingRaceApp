@@ -51,6 +51,8 @@
 
     <div class="col-md-9">
 
+        @Html.Action("_StaffManagement", "RaceEvent", new { raceEventId = Model.Id })
+
         @Html.Action("_TeamManagement", "RaceEvent", new { raceEventId = Model.Id })
 
         @Html.Action("_PitStopOrder", "RaceEvent", new { raceEventId = Model.Id })
