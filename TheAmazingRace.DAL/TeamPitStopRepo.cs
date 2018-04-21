@@ -9,11 +9,6 @@ namespace TheAmazingRace.DAL
 {
     public class TeamPitStopRepo : BaseRepo<TeamPitStop>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
-
-        public TeamPitStopRepo()
-        {
-            this.DbContext = dbContext;
-        }
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
     }
 }

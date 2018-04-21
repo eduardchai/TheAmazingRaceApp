@@ -1,4 +1,5 @@
-﻿using TheAmazingRace.DAL;
+﻿using System.Collections.Generic;
+using TheAmazingRace.DAL;
 
 namespace TheAmazingRace.BLL
 {
@@ -22,6 +23,11 @@ namespace TheAmazingRace.BLL
         {
             Repo.Update(t);
             return Repo.SaveChanges();
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return Repo.GetAll();
         }
     }
 }

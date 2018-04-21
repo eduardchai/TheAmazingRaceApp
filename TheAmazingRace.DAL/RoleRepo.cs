@@ -9,21 +9,41 @@ namespace TheAmazingRace.DAL
 {
     public class RoleRepo : BaseRepo<Role>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
-        public RoleRepo()
+        public Role GetById(string id)
         {
-            this.DbContext = dbContext;
+            try
+            {
+                return dbContext.Role.Where(r => r.Id == id).First();
+            } catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public List<Role> GetAllRoles()
+        public Role GetByName(string name)
         {
-            return dbContext.Role.ToList();
+            try
+            {
+                return dbContext.Role.Where(r => r.Name == name).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public string GetRoleIdByName(string roleName)
         {
-            return dbContext.Role.Where(r => r.Name == roleName).First().Id;
+            try
+            {
+                return dbContext.Role.Where(r => r.Name == roleName).First().Id;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

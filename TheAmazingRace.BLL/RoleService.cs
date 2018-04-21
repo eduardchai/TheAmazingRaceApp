@@ -16,10 +16,5 @@ namespace TheAmazingRace.BLL
         {
             this.Repo = repo;
         }
-
-        public List<Role> GetAllRoles()
-        {
-            return repo.GetAllRoles();
-        }
     }
 }

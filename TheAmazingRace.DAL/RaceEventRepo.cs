@@ -9,21 +9,18 @@ namespace TheAmazingRace.DAL
 {
     public class RaceEventRepo: BaseRepo<RaceEvent>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
-        public RaceEventRepo()
+        public RaceEvent GetById(int eventId)
         {
-            this.DbContext = dbContext;
-        }
-
-        public RaceEvent getEventById(int? eventId)
-        {
-            return dbContext.RaceEvent.Where(t => t.Id == eventId).First();
-        }
-
-        public List<RaceEvent> getAllEvents()
-        {
-            return dbContext.RaceEvent.ToList();
+            try
+            {
+                return dbContext.RaceEvent.Where(t => t.Id == eventId).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

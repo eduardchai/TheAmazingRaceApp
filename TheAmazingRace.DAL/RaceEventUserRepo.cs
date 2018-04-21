@@ -9,11 +9,18 @@ namespace TheAmazingRace.DAL
 {
     public class RaceEventUserRepo : BaseRepo<RaceEventUser>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
-        public RaceEventUserRepo()
+        public RaceEventUser GetById(int raceEventId, string userId)
         {
-            this.DbContext = dbContext;
+            try
+            {
+                return dbContext.RaceEventUser.Where(r => r.RaceEventId == raceEventId && r.UserId == userId).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         // GET: Admin/Team/Manage
         public ActionResult Manage()
         {
-            var models = TeamService.GetAllTeams();
+            var models = TeamService.GetAll();
             return View(models);
         }
 
@@ -55,7 +55,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var team = TeamService.GetTeamById(id);
+                var team = TeamService.GetById(id);
                 TempData["TeamId"] = id;
                 return View(team);
             }
@@ -69,7 +69,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var pit = TeamService.GetTeamById(id);
+                var pit = TeamService.GetById(id);
                 return View(pit);
             }
             else
@@ -99,7 +99,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         public ActionResult _ParticipantList()
         {
             var currentUserId = User.Identity.GetUserId();
-            List<User> models = UserService.GetAllParticipantsWithoutTeam();
+            var models = UserService.GetAllParticipantsWithoutTeam();
 
             return PartialView("_ParticipantList", models);
         }

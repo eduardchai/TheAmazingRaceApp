@@ -26,7 +26,7 @@
 
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">@controllerAction</li>
+            <li class="header">Menu</li>
             <!-- Optionally, you can add icons to the links -->
             <li class="@(controllerAction == "DashboardIndex" ? "active" : "")"><a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
 
@@ -69,51 +69,51 @@
 
             <li class="treeview @(controller == "RaceEvent" ? "active menu-open" : "")">
                 <a href="#">
-                    <i class="fa fa-link"></i> <span>Race Events</span>
+                    <i class="fa fa-map"></i> <span>Race Events</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="@(controllerAction == "RaceEventManage" ? "active" : "")">
-                        <a href="@Url.Action("Manage", "RaceEvent")"><i class="fa fa-dashboard"></i> <span>Manage</span></a>
+                        <a href="@Url.Action("Manage", "RaceEvent")"><i class="fa fa-table"></i> <span>Manage</span></a>
                     </li>
                     <li class="@(controllerAction == "RaceEventCreate" ? "active" : "")">
-                        <a href="@Url.Action("Create", "RaceEvent")"><i class="fa fa-dashboard"></i> <span>Create</span></a>
+                        <a href="@Url.Action("Create", "RaceEvent")"><i class="fa fa-plus-circle"></i> <span>Create</span></a>
                     </li>
                 </ul>
             </li>
 
             <li class="treeview @(controller == "PitStop" ? "active menu-open" : "")">
                 <a href="#">
-                    <i class="fa fa-link"></i> <span>Pit Stop</span>
+                    <i class="fa fa-flag-checkered"></i> <span>Pit Stop</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="@(controllerAction == "PitStopManage" ? "active" : "")">
-                        <a href="@Url.Action("Manage", "PitStop")"><i class="fa fa-dashboard"></i> <span>Manage</span></a>
+                        <a href="@Url.Action("Manage", "PitStop")"><i class="fa fa-table"></i> <span>Manage</span></a>
                     </li>
                     <li class="@(controllerAction == "PitStopCreate" ? "active" : "")">
-                        <a href="@Url.Action("Create", "PitStop")"><i class="fa fa-dashboard"></i> <span>Create</span></a>
+                        <a href="@Url.Action("Create", "PitStop")"><i class="fa fa-plus-circle"></i> <span>Create</span></a>
                     </li>
                 </ul>
             </li>
 
             <li class="treeview @(controller == "Team" ? "active menu-open" : "")">
                 <a href="#">
-                    <i class="fa fa-link"></i> <span>Team</span>
+                    <i class="fa fa-users"></i> <span>Team</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
                 <ul class="treeview-menu">
                     <li class="@(controllerAction == "TeamManage" ? "active" : "")">
-                        <a href="@Url.Action("Manage", "Team")"><i class="fa fa-dashboard"></i> <span>Manage</span></a>
+                        <a href="@Url.Action("Manage", "Team")"><i class="fa fa-table"></i> <span>Manage</span></a>
                     </li>
                     <li class="@(controllerAction == "TeamCreate" ? "active" : "")">
-                        <a href="@Url.Action("Create", "Team")"><i class="fa fa-dashboard"></i> <span>Create</span></a>
+                        <a href="@Url.Action("Create", "Team")"><i class="fa fa-plus-circle"></i> <span>Create</span></a>
                     </li>
                 </ul>
             </li>

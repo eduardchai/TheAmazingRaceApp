@@ -9,26 +9,42 @@ namespace TheAmazingRace.DAL
 {
     public class RaceEventPitStopRepo : BaseRepo<RaceEventPitStop>
     {
-        private TheAmazingRaceDbContext dbContext = new TheAmazingRaceDbContext();
-
-        public RaceEventPitStopRepo()
-        {
-            this.DbContext = dbContext;
-        }
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
         public RaceEventPitStop GetRaceEventPitStop(int raceEventId, int pitStopId)
         {
-            return dbContext.RaceEventPitStop.Where(r => r.RaceEventId == raceEventId && r.PitStopId == pitStopId).First();
+            try
+            {
+                return dbContext.RaceEventPitStop.Where(r => r.RaceEventId == raceEventId && r.PitStopId == pitStopId).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public List<RaceEventPitStop> GetAllByRaceEventId(int raceId)
         {
-            return dbContext.RaceEventPitStop.Where(r => r.RaceEventId == raceId).OrderBy(r => r.Order).ToList();
+            try
+            {
+                return dbContext.RaceEventPitStop.Where(r => r.RaceEventId == raceId).OrderBy(r => r.Order).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public RaceEventPitStop GetRaceEventPitStopByPitId(int pitId)
         {
-            return dbContext.RaceEventPitStop.Where(r => r.PitStopId == pitId).First();
+            try
+            {
+                return dbContext.RaceEventPitStop.Where(r => r.PitStopId == pitId).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

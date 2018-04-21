@@ -13,7 +13,9 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 {
     public class RaceEventController : Controller
     {
+        private UserService userService = new UserService();
         private RaceEventService raceEventService = new RaceEventService();
+        private RaceEventUserService raceEventUserService = new RaceEventUserService();
         private RaceEventPitStopService raceEventPitStopService = new RaceEventPitStopService();
         private PitStopService pitStopService = new PitStopService();
         private TeamService teamService = new TeamService();
@@ -22,7 +24,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         // GET: Admin/RaceEvent
         public ActionResult Manage()
         {
-            var data = raceEventService.getAllEvents();
+            var data = raceEventService.GetAll();
             return View(data);
         }
 
@@ -31,7 +33,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var model = raceEventService.getEventById(id);
+                var model = raceEventService.GetById(id);
                 Session["RaceEventId"] = id;
                 return View(model);
             }
@@ -46,7 +48,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var model = raceEventService.getEventById(id);
+                var model = raceEventService.GetById(id);
                 Session["RaceEventId"] = id;
                 return View(model);
             }
@@ -87,7 +89,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var model = raceEventService.getEventById(id); ;
+                var model = raceEventService.GetById(id); ;
                 return View(model);
             }
             else
@@ -146,7 +148,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         public ActionResult _PitStopList()
         {
-            var models = pitStopService.GetAllPitStops();
+            var models = pitStopService.GetAll();
             return PartialView("_PitStopList", models);
         }
 
@@ -170,38 +172,55 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             return null;
         }
 
+        public ActionResult _StaffManagement(int raceEventId)
+        {
+            var data = raceEventUserService.GetAll();
+            var test = userService.GetAllByRaceEventId(raceEventId);
+            var test2 = raceEventUserService.GetAllStaffsByRaceEventId(raceEventId);
+            return PartialView("_StaffManagement", data);
+        }
+
+        public ActionResult _StaffList()
+        {
+            var data = userService.GetAllByRoleName("Staff");
+            return PartialView("_StaffList", data);
+        }
+
+        public ActionResult AddStaffToRace(int raceEventId, string staffId)
+        {
+            raceEventUserService.AddStaffToRace(raceEventId, staffId);
+            return _StaffManagement(raceEventId);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveStaffFromRace(int raceEventId, string staffId)
+        {
+            raceEventUserService.RemoveStaffFromRace(raceEventId, staffId);
+            return _StaffManagement(raceEventId);
+        }
+
         public ActionResult _TeamManagement(int raceEventId)
         {
-            var data = teamService.GetAllTeamsWithRaceEventId(raceEventId);
+            var data = teamService.GetAllByRaceEventId(raceEventId);
             return PartialView("_TeamManagement", data);
         }
 
         public ActionResult _TeamList()
         {
-            var models = teamService.GetAllTeamsWithoutRace();
-            return PartialView("_TeamList", models);
+            var data = teamService.GetAllTeamsWithoutRace();
+            return PartialView("_TeamList", data);
         }
 
         public ActionResult AddTeamToRace(int raceEventId, int teamId)
         {
-            var team = teamService.GetTeamById(teamId);
-            team.RaceEventId = raceEventId;
-            team.UpdatedOn = DateTime.Now;
-            team.UpdatedById = User.Identity.GetUserId();
-
-            teamService.Update(team);
+            teamService.AddTeamToRace(raceEventId, teamId, User.Identity.GetUserId());
             return _TeamManagement(raceEventId);
         }
 
         [HttpPost]
         public ActionResult RemoveTeamFromRace(int raceEventId, int teamId)
         {
-            var team = teamService.GetTeamById(teamId);
-            team.RaceEventId = null;
-            team.UpdatedOn = DateTime.Now;
-            team.UpdatedById = User.Identity.GetUserId();
-            teamService.Update(team);
-
+            teamService.RemoveTeamFromRace(raceEventId, teamId, User.Identity.GetUserId());
             return _TeamManagement(raceEventId);
         }
 

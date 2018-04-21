@@ -17,14 +17,16 @@ namespace TheAmazingRace.BLL
             this.Repo = repo;
         }
 
-        public RaceEvent getEventById(int? eventId)
+        public RaceEvent GetById(int? eventId)
         {
-            return repo.getEventById(eventId);
-        }
-
-        public List<RaceEvent> getAllEvents()
-        {
-            return repo.getAllEvents();
+            if (eventId != null)
+            {
+                return repo.GetById((int)eventId);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

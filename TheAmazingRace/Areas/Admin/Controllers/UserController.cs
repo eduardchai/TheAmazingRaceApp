@@ -25,12 +25,12 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         public virtual ActionResult Manage()
         {
             var currentUserId = User.Identity.GetUserId();
-            List<User> models = null;
             if (RoleName != "")
             {
-                models = UserService.GetAllUsersWithRole(RoleName);
+                var models = UserService.GetAllByRoleName(RoleName);
+                return View(models);
             }
-            return View(models);
+            return View();
         }
 
         public virtual ActionResult Details(string id)

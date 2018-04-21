@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepo.cs" />
+    <Compile Include="DbContextFactory.cs" />
     <Compile Include="DBInitializer.cs" />
     <Compile Include="Migrations\201804191014437_InitialCreate.cs" />
     <Compile Include="Migrations\201804191014437_InitialCreate.Designer.cs">

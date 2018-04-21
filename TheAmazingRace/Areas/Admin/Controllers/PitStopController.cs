@@ -17,7 +17,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         // GET: Admin/PitStop
         public ActionResult Manage()
         {
-            var models = pitStopService.GetAllPitStops();
+            var models = pitStopService.GetAll();
             return View(models);
         }
 
@@ -51,7 +51,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var pit = pitStopService.GetPitStopById(id);
+                var pit = pitStopService.GetById(id);
                 return View(pit);
             }
             else

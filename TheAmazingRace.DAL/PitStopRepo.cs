@@ -9,21 +9,18 @@ namespace TheAmazingRace.DAL
 {
     public class PitStopRepo: BaseRepo<PitStop>
     {
-        private TheAmazingRaceDbContext dbContext =  new TheAmazingRaceDbContext();
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
 
-        public PitStopRepo()
+        public PitStop GetById(int id)
         {
-            this.DbContext = dbContext;
-        }
-
-        public PitStop GetPitStopById(int? id)
-        {
-            return dbContext.PitStop.Where(p => p.Id == id).First();
-        }
-
-        public List<PitStop> GetAllPitStops()
-        {
-            return dbContext.PitStop.Where(p => true).ToList();
+            try
+            {
+                return dbContext.PitStop.Where(p => p.Id == id).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

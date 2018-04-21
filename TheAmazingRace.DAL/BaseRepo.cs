@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Validation;
@@ -9,34 +10,84 @@ namespace TheAmazingRace.DAL
 {
     public partial class BaseRepo<T> where T : class, new()
     {
-        public TheAmazingRaceDbContext DbContext { get; set; }
+        private TheAmazingRaceDbContext dbContext = DbContextFactory.Create();
+
+        public T Create()
+        {
+            try
+            {
+                return dbContext.Set<T>().Create();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public void Add(T t)
         {
-            DbContext.Set<T>().Add(t);
+            try
+            {
+                dbContext.Set<T>().Add(t);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void Delete(T t)
         {
-            DbContext.Set<T>().Remove(t);
+            try
+            {
+                dbContext.Set<T>().Remove(t);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void Update(T t)
         {
-            DbContext.Set<T>().AddOrUpdate(t);
+            try
+            {
+                dbContext.Set<T>().AddOrUpdate(t);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            try
+            {
+                return dbContext.Set<T>().ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public IQueryable<T> GetModels(Expression<Func<T, bool>> whereLambda)
         {
-            return DbContext.Set<T>().Where(whereLambda);
+            try
+            {
+                return dbContext.Set<T>().Where(whereLambda);
+            } catch (Exception)
+            {
+                throw;
+            }
         }
 
         public bool SaveChanges()
         {
             try
             {
-                DbContext.SaveChanges();
-                return true;
+                return dbContext.SaveChanges() > 0;
             }
             catch (DbEntityValidationException ex)
             {

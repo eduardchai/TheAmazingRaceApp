@@ -41,7 +41,7 @@
                                     }
                                 </td>
                                 <td style="vertical-align:middle; text-align:center;">
-                                    <a onclick="addTeamtoRace(@item.Id)" class="btn btn-success">Add to race</a>
+                                    <a onclick="addTeamToRace('@item.Id')" class="btn btn-success">Add to race</a>
                                 </td>
                             </tr>
                         }
@@ -58,7 +58,7 @@
         $('#team-data-table').DataTable()
     })
 
-    function addTeamtoRace(id) {
+    function addTeamToRace(id) {
         var payload = {
             raceEventId: @Session["RaceEventId"],
             teamId: id
