@@ -12,6 +12,11 @@ namespace TheAmazingRace.Models
 {
     public class User : IdentityUser
     {
+        public User()
+        {
+            PhotoUrl = "/Content/img/default-avatar.jpg";
+        }
+
         [Required]
         [DisplayName("First name")]
         public string FirstName { get; set; }
@@ -29,25 +34,13 @@ namespace TheAmazingRace.Models
         [Required]
         public string Gender { get; set; }
 
-        public byte[] PhotoData { get; set; }
-        public string PhotoContentType { get; set; }
+        public string PhotoUrl { get; set; }
 
         public string Name
         {
             get
             {
                 return FirstName + " " + LastName;
-            }
-        }
-
-        public string PhotoSource
-        {
-            get
-            {
-                if (PhotoData != null)
-                    return "data:" + PhotoContentType + ";base64," + Convert.ToBase64String(PhotoData, 0, PhotoData.Length);
-                else
-                    return null;
             }
         }
 

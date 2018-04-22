@@ -443,6 +443,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="SendGrid\" />
+    <Folder Include="UploadedImages\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

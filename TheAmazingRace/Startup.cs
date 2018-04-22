@@ -43,12 +43,12 @@ namespace TheAmazingRace
                 {
                     UserName = "admin@nus.edu",
                     Email = "admin@nus.edu",
-                        FirstName = "Super",
-                        LastName = "Admin",
-                        DOB = DateTime.Now,
-                        Gender = "Male",
-                        CreatedBy = null,
-                        CreatedOn = DateTime.Now
+                    FirstName = "Super",
+                    LastName = "Admin",
+                    DOB = DateTime.Now,
+                    Gender = "Male",
+                    CreatedBy = null,
+                    CreatedOn = DateTime.Now
                 };
 
                 var result = userManager.Create(admin, "12345678");

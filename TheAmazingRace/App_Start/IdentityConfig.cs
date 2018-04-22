@@ -121,11 +121,7 @@ namespace TheAmazingRace
 
             //userIdentity.AddClaim(new Claim(CustomClaimTypes.UserEntityId, user.Id.ToString()));
             userIdentity.AddClaim(new Claim(CustomClaimTypes.UserEntityFullName, user.Name));
-
-            if (user.PhotoSource != null)
-            {
-                userIdentity.AddClaim(new Claim(CustomClaimTypes.UserEntityPhoto, user.PhotoSource));
-            }
+            userIdentity.AddClaim(new Claim(CustomClaimTypes.UserEntityPhoto, user.PhotoUrl));
 
             return userIdentity;
         }

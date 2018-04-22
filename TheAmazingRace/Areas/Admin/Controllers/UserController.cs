@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -63,10 +64,17 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 byte[] bytePhoto = new byte[contentLength];
                 file.InputStream.Read(bytePhoto, 0, contentLength);
 
+                if (file.ContentLength > 0)
+                {
+                    var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
+                    file.SaveAs(path);
+
+                    model.AppUser.PhotoUrl = "/UploadedImages/" + filename;
+                }
+
                 model.AppUser.UserName = model.Email;
                 model.AppUser.Email = model.Email;
-                model.AppUser.PhotoData = bytePhoto;
-                model.AppUser.PhotoContentType = file.ContentType;
                 model.AppUser.CreatedById = User.Identity.GetUserId();
                 model.AppUser.CreatedOn = DateTime.Now;
 
