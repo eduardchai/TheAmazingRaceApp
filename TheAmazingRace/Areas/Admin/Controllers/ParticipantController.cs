@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = ("Administrator, Staff"))]
     public class ParticipantController : UserController
     {
         public ParticipantController()

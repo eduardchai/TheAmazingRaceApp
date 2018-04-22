@@ -40,7 +40,9 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            var row_id = "row-" + item.Id;
+
+                            <tr id="@row_id">
                                 <td>
                                     @Html.DisplayFor(modelItem => item.PitStopName)
                                 </td>
@@ -61,7 +63,7 @@
                                 </td>
                                 <td>
                                     <a href="@Url.Action("Edit", "PitStop", new { id = item.Id })" class="btn btn-warning"><i class="fa fa-edit"></i> <span>Edit</span></a> &nbsp;
-                                    <a href="@Url.Action("Delete", "PitStop", new { id = item.Id })" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>
+                                    <a onclick="deletePitStop('@row_id', '@item.PitStopName')" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>
                                 </td>
                             </tr>
                         }
@@ -73,12 +75,32 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/datatable-js")
+<script>
+    $(function () {
+        $('#data-table').DataTable()
+    })
 
-    <script>
-        $(function () {
-            $('#data-table').DataTable()
-        })
-    </script>
-}
+    function deletePitStop(rowId, pitStopName) {
+        var id = rowId.split("-")[1];
+        var res = confirm("Do you want to delete " + pitStopName + "?");
+        if (res == true) {
+            var payload = {
+                id: id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/PitStop/Delete",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(payload)
+            }).always(function (data) {
+                if (data.status == 200) {
+                    $('#data-table').DataTable().row("#" + rowId).remove().draw();
+                } else {
+                    alert("An error has occured. Please try again later!");
+                }
+            })
+        };
+    }
+</script>

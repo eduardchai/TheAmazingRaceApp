@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -18,10 +16,22 @@ namespace TheAmazingRace
 {
     public class EmailService : IIdentityMessageService
     {
-        public Task SendAsync(IdentityMessage message)
+        public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            await configSendGridasync(message);
+        }
+
+        private async Task configSendGridasync(IdentityMessage message)
+        {
+            var apiKey = "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";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("noreply@u.nus.edu", "The Amazing Race Singapore");
+            var subject = message.Subject;
+            var to = new EmailAddress("eduard.anthony.chai@gmail.com", "Eduard Chai");
+            var plainTextContent = message.Body;
+            var htmlContent = message.Body;
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var response = await client.SendEmailAsync(msg);
         }
     }
 

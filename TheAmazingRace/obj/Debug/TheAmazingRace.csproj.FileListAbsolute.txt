@@ -259,3 +259,6 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.A
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.csproj.CopyComplete
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.pdb
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.pdb
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.xml

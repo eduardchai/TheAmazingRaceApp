@@ -46,40 +46,42 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Name)
-                            </td>
-                            <td>
-                                @foreach (var member in item.TeamMembers)
-                                {
-                                    <img src="@member.PhotoSource" class="img-circle" style="width:45px; margin:3px 5px;">
-                                }
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Event.EventName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CreatedOn)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CreatedBy.Name)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UpdatedOn)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UpdatedBy.Name)
-                            </td>
-                            <td>
-                                <a href="@Url.Action("ManageTeam", "Team", new { id = item.Id })" class="btn btn-info"><i class="fa fa-list-alt"></i> <span>Manage</span></a> &nbsp;
-                                <a href="@Url.Action("Edit", "Team", new { id = item.Id })" class="btn btn-warning"><i class="fa fa-edit"></i> <span>Edit</span></a> &nbsp;
-                                <a href="@Url.Action("Delete", "Team", new { id = item.Id })" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>
-                            </td>
-                        </tr>
+                            var row_id = "row-" + item.Id;
+
+                            <tr id="@row_id">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @foreach (var member in item.TeamMembers)
+                                    {
+                                        <img src="@member.PhotoSource" class="img-circle" style="width:45px; margin:3px 5px;">
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Event.EventName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedBy.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UpdatedOn)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UpdatedBy.Name)
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("ManageTeam", "Team", new { id = item.Id })" class="btn btn-info"><i class="fa fa-list-alt"></i> <span>Manage</span></a> &nbsp;
+                                    <a href="@Url.Action("Edit", "Team", new { id = item.Id })" class="btn btn-warning"><i class="fa fa-edit"></i> <span>Edit</span></a> &nbsp;
+                                    <a onclick="deleteTeam('@row_id', '@item.Name')" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>
+                                </td>
+                            </tr>
                         }
                     </tbody>
 
@@ -89,12 +91,32 @@
     </div>
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/datatable-js")
+<script>
+    $(function () {
+        $('#data-table').DataTable()
+    })
 
-    <script>
-        $(function () {
-            $('#data-table').DataTable()
-        })
-    </script>
-}
+    function deleteTeam(rowId, teamName) {
+        var id = rowId.split("-")[1];
+        var res = confirm("Do you want to delete " + teamName + "?");
+        if (res == true) {
+            var payload = {
+                id: id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Team/Delete",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(payload)
+            }).always(function (data) {
+                if (data.status == 200) {
+                    $('#data-table').DataTable().row("#" + rowId).remove().draw();
+                } else {
+                    alert("An error has occured. Please try again later!");
+                }
+            })
+        };
+    }
+</script>

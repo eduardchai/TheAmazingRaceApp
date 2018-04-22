@@ -11,6 +11,7 @@ namespace TheAmazingRace.BLL
     public class RaceEventService : BaseService<RaceEvent>
     {
         private RaceEventRepo repo = new RaceEventRepo();
+        private TeamRepo teamRepo = new TeamRepo();
 
         public RaceEventService()
         {
@@ -27,6 +28,21 @@ namespace TheAmazingRace.BLL
             {
                 return null;
             }
+        }
+
+        public bool Delete(int raceId)
+        {
+            var race = repo.GetById(raceId);
+            var teams = teamRepo.GetAllByRaceEventId(raceId);
+
+            foreach(var team in teams)
+            {
+                team.RaceEventId = null;
+            }
+
+            repo.Delete(race);
+
+            return repo.SaveChanges();
         }
     }
 }

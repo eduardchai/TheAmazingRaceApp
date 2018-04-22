@@ -37,7 +37,9 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            var row_id = "row-" + item.Id;
+                            
+                            <tr id="@row_id">
                                 <td valign="middle">
                                     @Html.DisplayFor(modelItem => item.EventName)
                                 </td>
@@ -57,7 +59,7 @@
                                     <a href="@Url.Action("Monitor", "RaceEvent", new { id = item.Id })" class="btn btn-success"><i class="fa fa-eye"></i> <span>Monitor</span></a> &nbsp;
                                     <a href="@Url.Action("ManageRace", "RaceEvent", new { id = item.Id })" class="btn btn-info"><i class="fa fa-list-alt"></i> <span>Manage</span></a> &nbsp;
                                     <a href="@Url.Action("Edit", "RaceEvent", new { id = item.Id })" class="btn btn-warning"><i class="fa fa-edit"></i> <span>Edit</span></a> &nbsp;
-                                    <a href="@Url.Action("Delete", "RaceEvent", new { id = item.Id })" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>
+                                    <a onclick="deleteRace('@row_id')" class="btn btn-danger"><i class="fa fa-times"></i> <span>Delete</span></a>
                                 </td>
                             </tr>
                         }
@@ -72,7 +74,31 @@
 @section Scripts {
     <script>
         $(function () {
-            $('#data-table').DataTable()
+            $('#data-table').DataTable();
         })
+
+        function deleteRace(rowId) {
+            var id = rowId.split("-")[1];
+            var res = confirm("Do you want to delete this race?");
+            if (res == true) {
+                var payload = {
+                    id: id
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/RaceEvent/Delete",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(payload)
+                }).always(function (data) {
+                    if (data.status == 200) {
+                        $('#data-table').DataTable().row("#" + rowId).remove().draw();
+                    } else {
+                        alert("An error has occured. Please try again later!");
+                    }
+                })
+            };
+        }
     </script>
 }

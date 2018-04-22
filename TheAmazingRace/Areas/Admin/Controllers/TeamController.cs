@@ -12,6 +12,7 @@ using TheAmazingRace.Models;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = ("Administrator, Staff"))]
     public class TeamController : Controller
     {
         TeamService TeamService = new TeamService();
@@ -93,6 +94,20 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             catch
             {
                 return View(team);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                TeamService.Delete(id);
+                return RedirectToAction("Manage");
+            }
+            catch
+            {
+                return View();
             }
         }
 
