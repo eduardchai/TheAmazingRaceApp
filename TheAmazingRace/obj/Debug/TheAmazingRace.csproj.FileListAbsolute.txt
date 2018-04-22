@@ -127,8 +127,12 @@ c:\Users\eduard\source\repos\TheAmazingRace\TheAmazingRace\bin\Microsoft.AspNet.
 c:\Users\eduard\source\repos\TheAmazingRace\TheAmazingRace\bin\System.Diagnostics.DiagnosticSource.dll
 c:\Users\eduard\source\repos\TheAmazingRace\TheAmazingRace\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 c:\Users\eduard\source\repos\TheAmazingRace\TheAmazingRace\bin\System.Diagnostics.DiagnosticSource.xml
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.csprojResolveAssemblyReference.cache
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.csproj.CoreCompileInputs.cache
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.IO.Compression.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\VBCSCompiler.exe
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\ApplicationInsights.config
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\TheAmazingRace.dll.config
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\TheAmazingRace.dll
@@ -140,14 +144,10 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\csi.
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\csi.exe.config
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\csi.rsp
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.CSharp.Core.targets
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.VisualBasic.Core.targets
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Microsoft.Win32.Primitives.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.AppContext.dll
@@ -156,7 +156,6 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Syst
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.Diagnostics.Process.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.Diagnostics.StackTrace.dll
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.IO.Compression.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.IO.FileSystem.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\System.IO.FileSystem.Primitives.dll
@@ -180,7 +179,6 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\Syst
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\vbc.exe
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\vbc.exe.config
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\vbc.rsp
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\VBCSCompiler.exe
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\roslyn\VBCSCompiler.exe.config
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Antlr3.Runtime.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\EntityFramework.dll
@@ -209,6 +207,7 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.O
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.Web.Infrastructure.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Newtonsoft.Json.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Owin.dll
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Diagnostics.DiagnosticSource.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Web.Helpers.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Web.Mvc.dll
@@ -245,6 +244,8 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.O
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.Owin.Security.OAuth.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.Owin.Security.Twitter.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Newtonsoft.Json.xml
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.pdb
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Diagnostics.DiagnosticSource.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Web.Helpers.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Web.Mvc.xml
@@ -256,9 +257,8 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\System.Web.
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.AspNet.Identity.Core.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.AspNet.Identity.Owin.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.csprojResolveAssemblyReference.cache
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.csproj.CoreCompileInputs.cache
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.csproj.CopyComplete
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\obj\Debug\TheAmazingRace.pdb
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.dll
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.pdb
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace\bin\SendGrid.xml
