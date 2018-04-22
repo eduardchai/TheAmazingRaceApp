@@ -17,7 +17,19 @@ namespace TheAmazingRace.DAL
                 return dbContext.Users.Where(u => u.Id == id).First();
             } catch (Exception)
             {
-                throw;
+                return null;
+            }
+        }
+
+        public User GetById(string id, string roleId)
+        {
+            try
+            {
+                return dbContext.Users.Where(u => u.Id == id && u.Roles.Select(r => r.RoleId).Contains(roleId)).First();
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
 
@@ -74,6 +86,18 @@ namespace TheAmazingRace.DAL
             try
             {
                 return dbContext.RaceEventUser.Where(m => m.RaceEventId == raceEventId).Select(m => m.User).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public IEnumerable<User> GetAllByTeamId(int teamId)
+        {
+            try
+            {
+                return dbContext.Users.Where(m => m.TeamId == teamId).ToList();
             }
             catch (Exception)
             {

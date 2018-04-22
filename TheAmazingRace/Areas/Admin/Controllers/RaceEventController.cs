@@ -11,6 +11,7 @@ using TheAmazingRace.BLL;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = ("Administrator, Staff"))]
     public class RaceEventController : Controller
     {
         private UserService userService = new UserService();
@@ -118,21 +119,14 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             }
         }
 
-        // GET: Admin/RaceEvent/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Admin/RaceEvent/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                raceEventService.Delete(id);
+                return RedirectToAction("Manage");
             }
             catch
             {
@@ -175,8 +169,6 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         public ActionResult _StaffManagement(int raceEventId)
         {
             var data = raceEventUserService.GetAll();
-            var test = userService.GetAllByRaceEventId(raceEventId);
-            var test2 = raceEventUserService.GetAllStaffsByRaceEventId(raceEventId);
             return PartialView("_StaffManagement", data);
         }
 

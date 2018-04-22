@@ -10,6 +10,7 @@ using TheAmazingRace.Models;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
+    [Authorize(Roles = ("Administrator, Staff"))]
     public class PitStopController : Controller
     {
         private PitStopService pitStopService = new PitStopService();
@@ -75,6 +76,22 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             catch
             {
                 return View(pit);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var pitStop = pitStopService.GetById(id);
+                pitStopService.Delete(pitStop);
+
+                return RedirectToAction("Manage");
+            }
+            catch
+            {
+                return View();
             }
         }
     }

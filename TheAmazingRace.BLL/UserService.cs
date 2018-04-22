@@ -22,6 +22,12 @@ namespace TheAmazingRace.BLL
             return repo.GetById(userId);
         }
 
+        public User GetUserById(string userId, string roleName)
+        {
+            var roleId = roleRepo.GetRoleIdByName(roleName);
+            return repo.GetById(userId, roleId);
+        }
+
         public bool RemoveUserFromTeam(string userId)
         {
             User user = GetUserById(userId);
