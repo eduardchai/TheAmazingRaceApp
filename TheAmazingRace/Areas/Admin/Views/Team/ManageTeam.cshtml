@@ -64,7 +64,6 @@
 
     @foreach (var item in Model.TeamMembers)
     {
-        var profilePhoto = item.PhotoSource != null ? item.PhotoSource : Url.Content("~/Content/img/default-avatar.jpg");
         count++;
 
         var userUpdatedBy = item.UpdatedBy != null ? item.UpdatedBy.Name : "-";
@@ -77,7 +76,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <img class="profile-user-img img-responsive img-circle" src="@profilePhoto" alt="User profile picture">
+                    <img class="profile-user-img img-responsive img-circle" src="@item.PhotoUrl" alt="User profile picture">
 
                     <h3 class="profile-username text-center">@item.Name</h3>
 

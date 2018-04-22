@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Details Staff";
-    var profilePicSrc = Model.PhotoSource != null ? Model.PhotoSource : Url.Content("~/Content/img/default-avatar.jpg");
 }
 
 <div class="row">
@@ -12,7 +11,7 @@
         <div class="box box-primary">
             <div class="box-body">
                 <div class="form-group">
-                    <img src="@profilePicSrc" class="img-circle img-responsive img-xs-center img-md-clear" alt="User Image" style="max-width:200px; width:100%; padding:10px 20px;" />
+                    <img src="@Model.PhotoUrl" class="img-circle img-responsive img-xs-center img-md-clear" alt="User Image" style="max-width:200px; width:100%; padding:10px 20px;" />
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.FirstName)
