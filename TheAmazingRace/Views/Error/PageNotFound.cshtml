@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "404 Page Not Found";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<div style="text-align:center">
+    <h2 class="headline text-yellow" style="font-size:92px;">404</h2>
+
+    <div class="error-content">
+        <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
+
+        <p>
+            We could not find the page you were looking for.
+        </p>
+        <br />
+
+        <a href="@Url.Action("Index", "Home", new { areas = "" })" class="btn btn-primary">Return to Homepage</a>
+    </div>
+</div>

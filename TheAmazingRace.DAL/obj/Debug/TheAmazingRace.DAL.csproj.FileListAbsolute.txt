@@ -32,9 +32,9 @@ Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\bin\Debug\E
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.csprojResolveAssemblyReference.cache
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.Migrations.InitialCreate.resources
+Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.csproj.GenerateResource.cache
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.csproj.CoreCompileInputs.cache
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.csproj.CopyComplete
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.dll
 Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.pdb
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.Migrations.InitialCreate.resources
-Z:\workspace\nus\SG4210\Code-First\TheAmazingRace\TheAmazingRace.DAL\obj\Debug\TheAmazingRace.DAL.csproj.GenerateResource.cache
