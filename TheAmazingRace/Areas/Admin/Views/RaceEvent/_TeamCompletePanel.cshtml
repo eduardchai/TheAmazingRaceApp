@@ -86,7 +86,6 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(payload)
         }).always(function (data) {
-            console.log(data);
             if (data.status == 200) {
                 $("#team-control-panel").replaceWith(data.responseText);
             } else if (data.status == 600) {
