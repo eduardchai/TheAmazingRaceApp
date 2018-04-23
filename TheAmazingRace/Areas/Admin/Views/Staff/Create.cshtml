@@ -88,6 +88,8 @@
                 maxDate: d
             });
 
+            $("#staff-dob").val(moment(d).format("YYYY-MM-DD"));
+
             $('#dob-dt').on('dp.change', function (e) {
                 $("#staff-dob").val(e.date.format("YYYY-MM-DD"));
             });

@@ -122,13 +122,16 @@
     <script>
         $(function () {
             var d = new Date();
+            d = new Date(d.setDate(d.getDate() + 7));
 
             $('#race-event-dt').datetimepicker({
                 inline: true,
                 sideBySide: true,
                 stepping: 15,
-                minDate: new Date(d.setDate(d.getDate() + 7))
+                minDate: d
             });
+
+            $("#race-event-date").val(moment(d).format("YYYY-MM-DD HH:mm:00"));
 
             $('#race-event-dt').on('dp.change', function (e) {
                 $("#race-event-date-txt").val(e.date.format("DD-MM-YYYY HH:mm:00"));
