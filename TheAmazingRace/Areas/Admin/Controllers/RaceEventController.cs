@@ -90,7 +90,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             if (id > 0)
             {
-                var model = raceEventService.GetById(id); ;
+                var model = raceEventService.GetById(id);
                 return View(model);
             }
             else
