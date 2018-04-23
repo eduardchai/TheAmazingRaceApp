@@ -40,14 +40,15 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.AppUser.DOB)
-                        @Html.EditorFor(model => model.AppUser.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model => model.AppUser.DOB, new { id = "staff-dob" })
+                        <input type='text' class="form-control" id='dob-dt' />
                         @Html.ValidationMessageFor(model => model.AppUser.DOB, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.AppUser.Gender)
                         @Html.DropDownListFor(model => model.AppUser.Gender, (IEnumerable<SelectListItem>
-                      )ViewData["GenderOptions"], "Please select one", new { @class = "form-control" })
+           )ViewData["GenderOptions"], "Please select one", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.AppUser.Gender, "", new { @class = "text-danger" })
                     </div>
 
@@ -77,6 +78,21 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+        $(function () {
+            var d = new Date();
+            d = new Date(d.setDate(d.getDate() - (365 * 17)));
+
+            $('#dob-dt').datetimepicker({
+                format: "DD MMM YYYY",
+                defaultDate: d,
+                maxDate: d
+            });
+
+            $('#dob-dt').on('dp.change', function (e) {
+                $("#staff-dob").val(e.date.format("YYYY-MM-DD"));
+            });
+        });
+
         $("#submit-btn").click(() => $(".alert").hide());
     </script>
 }

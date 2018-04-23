@@ -27,7 +27,7 @@ namespace TheAmazingRace.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Date of birth")]
         public DateTime DOB { get; set; }
 

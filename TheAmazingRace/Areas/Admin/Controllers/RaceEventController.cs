@@ -111,7 +111,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 raceEventService.Update(race);
 
                 TempData["MessageAlert"] = new Alert { CssClass = "alert-success", Title = "Success!", Message = "Race event is successfully updated." };
-                return View();
+                return View(race);
             }
             catch
             {

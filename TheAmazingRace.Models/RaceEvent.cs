@@ -22,7 +22,7 @@ namespace TheAmazingRace.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]
         [DisplayName("Event Date")]
         public DateTime EventDate { get; set; }
 

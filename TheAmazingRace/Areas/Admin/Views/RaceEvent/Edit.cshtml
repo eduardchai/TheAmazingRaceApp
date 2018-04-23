@@ -39,8 +39,13 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.EventDate)
-                        @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model => model.EventDate, new { id = "race-event-date" })
+                        <input type="text" class="form-control" id="race-event-date-txt" value="@Model.EventDate.ToString("dd-MM-yyyy HH:mm:ss")" readonly />
                         @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <div id="race-event-dt"></div>
                     </div>
                 </div>
 
@@ -123,6 +128,25 @@
 
     <script>
         $("#submit-btn").click(() => $(".alert").hide());
+
+        $(function () {
+            var d = new Date();
+            var raceEventDate = "@Model.EventDate.Date.ToString("yyyy-MM-dd") " + "@Model.EventDate.Hour" + ":" + "@Model.EventDate.Minute";
+
+            $('#race-event-dt').datetimepicker({
+                date: raceEventDate,
+                format: "yyyy-MM-dd HH:mm",
+                inline: true,
+                sideBySide: true,
+                stepping: 15,
+                minDate: new Date(d.setDate(d.getDate() + 7))
+            });
+
+            $('#race-event-dt').on('dp.change', function (e) {
+                $("#race-event-date-txt").val(e.date.format("DD-MM-YYYY HH:mm:00"));
+                $("#race-event-date").val(e.date.format("YYYY-MM-DD HH:mm:00"));
+            });
+        });
 
         $("#btn-postal-code").click(function () {
             var regex = new RegExp("[0-9]{6}");
