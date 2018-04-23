@@ -42,7 +42,8 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.DOB)
-                        @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.HiddenFor(model => model.DOB, new { id="dob-value" })
+                        <input type='text' class="form-control" id='dob-dt' />
                         @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                     </div>
 
@@ -75,6 +76,21 @@
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
+        $(function () {
+            var d = new Date();
+            d = new Date(d.setDate(d.getDate() - (365 * 17)));
+
+            $('#dob-dt').datetimepicker({
+                format: "DD MMM YYYY",
+                date: "@Model.DOB.Date.ToString("yyyy-MM-dd")",
+                maxDate: d
+            });
+
+            $('#dob-dt').on('dp.change', function (e) {
+                $("#dob-value").val(e.date.format("YYYY-MM-DD"));
+            });
+        });
+
         $("#submit-btn").click(() => $(".alert").hide());
     </script>
 }

@@ -21,7 +21,9 @@ namespace TheAmazingRace
 
             bundles.Add(new ScriptBundle("~/bundles/admin-js").Include(
                         "~/Scripts/admin/adminlte.js",
-                        "~/Scripts/jquery-ui-1.12.1.js"));
+                        "~/Scripts/jquery-ui-1.12.1.js",
+                        "~/Scripts/moment.min.js",
+                        "~/Scripts/bootstrap-datetimepicker.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/datatable-js").Include(
                         "~/Scripts/admin/jquery.dataTables.min.js",
@@ -56,7 +58,8 @@ namespace TheAmazingRace
                       "~/Content/admin/AdminLTE.css",
                       "~/Content/admin/skins/skin-blue.css",
                       "~/Content/admin/dataTables.bootstrap.min.css",
-                      "~/Content/admin/jquery-sortable.css"));
+                      "~/Content/admin/jquery-sortable.css",
+                      "~/Content/bootstrap-datetimepicker.min.css"));
         }
     }
 }
