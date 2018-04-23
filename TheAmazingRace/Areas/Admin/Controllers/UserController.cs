@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -60,10 +62,6 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 HttpPostedFileBase file = Request.Files[0];
-                int contentLength = file.ContentLength;
-                byte[] bytePhoto = new byte[contentLength];
-                file.InputStream.Read(bytePhoto, 0, contentLength);
-
                 if (file.ContentLength > 0)
                 {
                     var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
@@ -287,11 +285,21 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 newUser.UpdatedOn = DateTime.Now;
                 newUser.UpdatedById = User.Identity.GetUserId();
 
+                HttpPostedFileBase file = Request.Files[0];
+                if (file.ContentLength > 0)
+                {
+                    var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
+                    file.SaveAs(path);
+
+                    newUser.PhotoUrl = "/UploadedImages/" + filename;
+                }
+
                 userService.Update(newUser);
                 TempData["MessageAlert"] = new Alert { CssClass = "alert-success", Title = "Success!", Message = RoleName + " is successfully updated." };
                 return RedirectToAction("Edit", new { id = user.Id });
             }
-            catch
+            catch(Exception ex)
             {
                 ViewData["GenderOptions"] = GenderOptions;
                 return View(user);
@@ -381,7 +389,31 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 newUser.UpdatedOn = DateTime.Now;
                 newUser.UpdatedById = User.Identity.GetUserId();
 
+                HttpPostedFileBase file = Request.Files[0];
+                if (file.ContentLength > 0)
+                {
+                    var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
+                    file.SaveAs(path);
+
+                    newUser.PhotoUrl = "/UploadedImages/" + filename;
+                }
+
                 userService.Update(newUser);
+
+                var authenticationManager = HttpContext.GetOwinContext().Authentication;
+                // create a new identity from the old one
+                var identity = new ClaimsIdentity(User.Identity);
+                // update claim value
+                identity.RemoveClaim(identity.FindFirst(CustomClaimTypes.UserEntityPhoto));
+                identity.AddClaim(new Claim(CustomClaimTypes.UserEntityPhoto, newUser.PhotoUrl));
+
+                authenticationManager.AuthenticationResponseGrant =
+                    new AuthenticationResponseGrant(
+                        new ClaimsPrincipal(identity),
+                        new AuthenticationProperties { IsPersistent = true }
+                    );
+
                 TempData["MessageAlert"] = new Alert { CssClass = "alert-success", Title = "Success!", Message = "Profile is successfully updated." };
                 return RedirectToAction("ManageAccount");
             }

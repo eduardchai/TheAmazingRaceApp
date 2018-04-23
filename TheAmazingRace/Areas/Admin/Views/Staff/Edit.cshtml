@@ -5,7 +5,7 @@
     ViewBag.Title = "Edit Staff";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Staff", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -26,7 +26,7 @@
             <div class="box box-primary">
                 <div class="box-body">
                     <div class="form-group">
-                        <img src="@Model.PhotoUrl" class="img-circle img-responsive img-xs-center img-md-clear" alt="User Image" style="max-width:200px; width:100%; padding:10px 20px;" />
+                        <img id="profile-pict" src="@Model.PhotoUrl" class="img-circle img-responsive img-xs-center img-md-clear" alt="User Image" style="max-width:200px; width:100%; padding:10px 20px;" />
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.FirstName)
@@ -42,7 +42,7 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.DOB)
-                        @Html.HiddenFor(model => model.DOB, new { id="dob-value" })
+                        @Html.HiddenFor(model => model.DOB, new { id = "dob-value" })
                         <input type='text' class="form-control" id='dob-dt' />
                         @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                     </div>
@@ -50,7 +50,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Gender)
                         @Html.DropDownListFor(model => model.Gender, (IEnumerable<SelectListItem>
-                                                )ViewData["GenderOptions"], "Please select one", new { @class = "form-control" })
+                                     )ViewData["GenderOptions"], "Please select one", new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                     </div>
 
@@ -58,6 +58,11 @@
                         @Html.LabelFor(model => model.Email)
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter email" } })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Profile picture</label>
+                        <input type="file" name="file" id="upload-image" />
                     </div>
                 </div>
                 <!-- /.box-body -->
@@ -89,6 +94,20 @@
             $('#dob-dt').on('dp.change', function (e) {
                 $("#dob-value").val(e.date.format("YYYY-MM-DD"));
             });
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#profile-pict').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#upload-image").change(function () {
+            readURL(this);
         });
 
         $("#submit-btn").click(() => $(".alert").hide());
