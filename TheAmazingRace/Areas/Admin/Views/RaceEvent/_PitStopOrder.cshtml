@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<TheAmazingRace.Models.RaceEventPitStop>
+@{
+    var raceStarted = (bool)Session["RaceStarted"];
+}
 
 <div id="pitstop-management">
     <div class="row">
@@ -6,26 +9,39 @@
             <div class="box box-danger">
                 <div class="box-header with-border">
                     <h3 class="box-title">Pit Stop Management</h3>
+                    @if (!raceStarted)
+                    {
+                        <p class="help-block">Drag and drop to rearrange the pit stop.</p>
+                    }
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <p>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-pitstop">
-                            Add Pit Stop
-                        </button>
-                    </p>
+                    @if (!raceStarted)
+                    {
+                        <p>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-pitstop">
+                                Add Pit Stop
+                            </button>
+                        </p>
+                    }
 
                     <ol id="pitstop-drag" class="pit-sortable vertical">
                         @foreach (var item in Model)
-                         {
+                        {
                             var elId = "pit-" + item.PitStopId;
 
                             <li id="@elId">
-                                <i class="fa fa-arrows"></i> &nbsp;
+                                @if (!raceStarted)
+                                {
+                                    <i class="fa fa-arrows"></i>
+                                }
                                 <b>@item.PitStop.PitStopName</b><br />
                                 <b>Location:</b> @item.PitStop.Address<br />
                                 <b>Challenge:</b> @item.PitStop.ChallengeDescription<br />
-                                <button class="btn btn-danger btn-sm" onclick="removePitStop('@elId');" style="margin-top:5px;">Remove</button>
+                                @if (!raceStarted)
+                                {
+                                    <button class="btn btn-danger btn-sm" onclick="removePitStop('@elId');" style="margin-top:5px;">Remove</button>
+                                }
                             </li>
                         }
                     </ol>
@@ -37,111 +53,109 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-pitstop">
-    <div class="modal-dialog" style="width:80%;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Default Modal</h4>
+@if (!raceStarted)
+{
+    <div class="modal fade" id="modal-pitstop">
+        <div class="modal-dialog" style="width:80%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Pit Stop</h4>
+                </div>
+                <div class="modal-body">
+                    @Html.Action("_PitStopList", "RaceEvent")
+                </div>
+                <div class="modal-footer" style="text-align:center;">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <div class="modal-body">
-                @Html.Action("_PitStopList", "RaceEvent")
-            </div>
-            <div class="modal-footer" style="text-align:center;">
-                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-content -->
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
+    <!-- /.modal -->
+}
 
-<script>
+@if (!raceStarted)
+{
+    <script>
 
-    function convertSortableIds(order) {
-        var i;
-        for (i = 0; i < order.length; i++) {
-            order[i] = order[i].split("-")[1];
+        function convertSortableIds(order) {
+            var i;
+            for (i = 0; i < order.length; i++) {
+                order[i] = order[i].split("-")[1];
+            }
+
+            return order;
         }
 
-        return order;
-    }
+        function loadDraggable() {
+            $("ol.pit-sortable").sortable({
+                update: function () {
+                    var order = $(this).sortable("toArray");
+                    order = convertSortableIds(order);
 
-    function loadDraggable() {
-        $("ol.pit-sortable").sortable({
-            update: function () {
-                var order = $(this).sortable("toArray");
+                    var payload = {
+                        raceEventId: @Session["RaceEventId"],
+                        pitStopIds: order
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/RaceEvent/UpdatePitStops",
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(payload)
+                    })
+                },
+                remove: function () {
+                    var order = $(this).sortable("toArray");
+                    var i;
+                    for (i = 0; i < order.length; i++) {
+                        order[i] = order[i].split("-")[1];
+                    }
+                    console.log("remove", order);
+                }
+            });
+            $("ol.pit-sortable").disableSelection();
+        }
+
+        function removePitStop(id) {
+            var res = confirm("Do you want to remove this pit stop from race?")
+            if (res == true) {
+                var pitStopId = id.split("-")[1];
+
+                $("#" + id).remove();
+                var order = $("ol.pit-sortable").sortable("toArray");
                 order = convertSortableIds(order);
+                console.log(order);
 
                 var payload = {
                     raceEventId: @Session["RaceEventId"],
+                    removedPitStopId: pitStopId,
                     pitStopIds: order
-                }
+                };
+
                 $.ajax({
                     type: "POST",
-                    url: "/Admin/RaceEvent/UpdatePitStops",
+                    url: "/Admin/RaceEvent/RemovePitStopFromRace",
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(payload)
-                })
-            },
-            remove: function () {
-                var order = $(this).sortable("toArray");
-                var i;
-                for (i = 0; i < order.length; i++) {
-                    order[i] = order[i].split("-")[1];
-                }
-                console.log("remove", order);
+                }).always(function (data) {
+                    if (data.status == 200) {
+                        return;
+                    } else {
+                        alert("An error has occured. Please try again later!");
+                    }
+                });
             }
-        });
-        $("ol.pit-sortable").disableSelection();
-    }
-
-    function removePitStop(id) {
-        var res = confirm("Do you want to remove this pit stop from race?")
-        if (res == true) {
-            var pitStopId = id.split("-")[1];
-
-            $("#" + id).remove();
-            var order = $("ol.pit-sortable").sortable("toArray");
-            order = convertSortableIds(order);
-            console.log(order);
-
-            var payload = {
-                raceEventId: @Session["RaceEventId"],
-                removedPitStopId: pitStopId,
-                pitStopIds: order
-            };
-
-            $.ajax({
-                type: "POST",
-                url: "/Admin/RaceEvent/RemovePitStopFromRace",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(payload)
-            }).always(function (data) {
-                if (data.status == 200) {
-                    return;
-                } else {
-                    alert("An error has occured. Please try again later!");
-                }
-            });
         }
-    }
 
-    $(function () {
-        loadDraggable();
-    })
-
-    $("#test").on("click", function () {
-        $.ajax({
-            url: "/Admin/RaceEvent/ReloadPitStopSummary"
-        }).done(function (partialViewResult) {
-            $("#pitstop-management").html(partialViewResult);
+        $(function () {
             loadDraggable();
-        });
-    });
-</script>
+        })
+
+    </script>
+}

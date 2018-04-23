@@ -36,6 +36,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             {
                 var model = raceEventService.GetById(id);
                 Session["RaceEventId"] = id;
+                Session["RaceStarted"] = model.EventDate < DateTime.Now;
                 return View(model);
             }
             else
@@ -91,6 +92,12 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             if (id > 0)
             {
                 var model = raceEventService.GetById(id);
+
+                if (model.EventDate < DateTime.Now)
+                {
+                    return RaceAlreadyStarted();
+                }
+
                 return View(model);
             }
             else
@@ -105,6 +112,11 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             try
             {
+                if (race.EventDate < DateTime.Now)
+                {
+                    return RaceAlreadyStarted();
+                }
+
                 race.UpdatedById = User.Identity.GetUserId();
                 race.UpdatedOn = DateTime.Now;
 
@@ -125,6 +137,11 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             try
             {
+                var model = raceEventService.GetById(id);
+                if (model.EventDate < DateTime.Now)
+                {
+                    return RaceAlreadyStarted();
+                }
                 raceEventService.Delete(id);
                 return RedirectToAction("Manage");
             }
@@ -142,18 +159,29 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         public ActionResult _PitStopList()
         {
-            var models = pitStopService.GetAll();
+            var raceEventId = (int)Session["RaceEventId"];
+            var models = pitStopService.GetAllForRaceEvent(raceEventId);
             return PartialView("_PitStopList", models);
         }
 
         public ActionResult AddPitStopToRace(int raceEventId, int pitStopId)
         {
+            var model = raceEventService.GetById(raceEventId);
+            if (model.EventDate < DateTime.Now)
+            {
+                return RaceAlreadyStarted();
+            }
             raceEventPitStopService.AddPitStop(raceEventId, pitStopId);
             return RedirectToAction("ManageRace", "RaceEvent", new { id = raceEventId });
         }
 
         public ActionResult RemovePitStopFromRace(int raceEventId, int removedPitStopId, List<int> pitStopIds)
         {
+            var model = raceEventService.GetById(raceEventId);
+            if (model.EventDate < DateTime.Now)
+            {
+                return RaceAlreadyStarted();
+            }
             raceEventPitStopService.RemovePitStop(raceEventId, removedPitStopId);
             UpdatePitStops(raceEventId, pitStopIds);
             return null;
@@ -162,6 +190,11 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult UpdatePitStops(int raceEventId, List<int> pitStopIds)
         {
+            var model = raceEventService.GetById(raceEventId);
+            if (model.EventDate < DateTime.Now)
+            {
+                return RaceAlreadyStarted();
+            }
             raceEventPitStopService.UpdatePitStopOrder(raceEventId, pitStopIds);
             return null;
         }
@@ -205,6 +238,12 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         public ActionResult AddTeamToRace(int raceEventId, int teamId)
         {
+            var model = raceEventService.GetById(raceEventId);
+            if (model.EventDate < DateTime.Now)
+            {
+                return RaceAlreadyStarted();
+            }
+
             teamService.AddTeamToRace(raceEventId, teamId, User.Identity.GetUserId());
             return _TeamManagement(raceEventId);
         }
@@ -212,6 +251,12 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult RemoveTeamFromRace(int raceEventId, int teamId)
         {
+            var model = raceEventService.GetById(raceEventId);
+            if (model.EventDate < DateTime.Now)
+            {
+                return RaceAlreadyStarted();
+            }
+
             teamService.RemoveTeamFromRace(raceEventId, teamId, User.Identity.GetUserId());
             return _TeamManagement(raceEventId);
         }
@@ -231,8 +276,23 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult CompletePitStop(int raceEventId, int pitStopId, int teamId, int currentPitStopOrder)
         {
+            var model = raceEventService.GetById(raceEventId);
+            if (model.EventDate > DateTime.Now)
+            {
+                return new HttpStatusCodeResult(600, "Your action is not allowed since the race is not yet started!");
+            }
             raceEventPitStopTeamService.CompletePitStop(raceEventId, pitStopId, teamId, currentPitStopOrder);
             return _TeamCompletePanel(raceEventId);
+        }
+
+        public ActionResult RaceAlreadyStarted()
+        {
+            return View();
+        }
+
+        public ActionResult RaceNotYetStarted()
+        {
+            return View();
         }
     }
 }

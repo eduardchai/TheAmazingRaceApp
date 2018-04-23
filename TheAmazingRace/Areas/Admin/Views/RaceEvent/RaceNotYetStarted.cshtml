@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-red"></i> Race is not yet started!</h3>
+
+            <p>
+                Your action is not allowed because the race is not yet started.
+            </p>
+
+            <p>Contact Administrator for more assistance.</p>
+            <br />
+
+            <a href="@Url.Action("Index", "Dashboard", new { areas = "Admin" })" class="btn btn-primary">Return to Dashboard</a>
+        </div>
+    </div>
+</div>

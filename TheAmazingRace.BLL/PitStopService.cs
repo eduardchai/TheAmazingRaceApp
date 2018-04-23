@@ -11,6 +11,7 @@ namespace TheAmazingRace.BLL
     public class PitStopService : BaseService<PitStop>
     {
         private PitStopRepo repo = new PitStopRepo();
+        private RaceEventPitStopRepo raceEventPitStopRepo = new RaceEventPitStopRepo();
 
         public PitStopService()
         {
@@ -27,6 +28,13 @@ namespace TheAmazingRace.BLL
             {
                 return null;
             }
+        }
+
+        public IEnumerable<PitStop> GetAllForRaceEvent(int raceEventId)
+        {
+            var pitStops = raceEventPitStopRepo.GetPitStopByRaceId(raceEventId);
+
+            return repo.GetAll().Except(pitStops).ToList();
         }
     }
 }
