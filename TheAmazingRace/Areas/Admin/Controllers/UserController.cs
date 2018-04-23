@@ -16,7 +16,6 @@ using TheAmazingRace.Utilities;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
-    [Authorize(Roles = ("Administrator, Staff"))]
     public partial class UserController : AccountPartialController
     {
         private TheAmazingRaceDbContext context = TheAmazingRaceDbContext.Create();
@@ -24,6 +23,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         public string RoleName { get; set; }
 
+        [Authorize(Roles = ("Administrator,Staff"))]
         public virtual ActionResult Manage()
         {
             var currentUserId = User.Identity.GetUserId();
@@ -35,6 +35,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             return View();
         }
 
+        [Authorize(Roles = ("Administrator,Staff"))]
         public virtual ActionResult Details(string id)
         {
             if (id != null)
@@ -49,6 +50,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             }
         }
 
+        [Authorize(Roles = ("Administrator,Staff"))]
         public virtual ActionResult Create()
         {
             ViewData["GenderOptions"] = GenderOptions;
@@ -57,6 +59,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = ("Administrator,Staff"))]
         public async Task<ActionResult> Create(CreateUserViewModel model)
         {
             if (ModelState.IsValid)
@@ -255,6 +258,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = ("Administrator,Staff"))]
         public virtual ActionResult Edit(string id)
         {
             if (id != null)
@@ -272,6 +276,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = ("Administrator,Staff"))]
         public ActionResult Edit(User user)
         {
             try
@@ -299,13 +304,14 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 TempData["MessageAlert"] = new Alert { CssClass = "alert-success", Title = "Success!", Message = RoleName + " is successfully updated." };
                 return RedirectToAction("Edit", new { id = user.Id });
             }
-            catch(Exception ex)
+            catch
             {
                 ViewData["GenderOptions"] = GenderOptions;
                 return View(user);
             }
         }
 
+        [Authorize(Roles = ("Administrator,Staff"))]
         public virtual ActionResult Delete(string id)
         {
             if (id != null)
@@ -323,6 +329,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = ("Administrator,Staff"))]
         public ActionResult Delete(string id, FormCollection collection)
         {
             try
@@ -360,6 +367,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             }
         }
 
+        [Authorize(Roles = ("Administrator,Staff,Participant"))]
         public virtual ActionResult ManageAccount()
         {
             var user = userService.GetUserById(User.Identity.GetUserId());
@@ -374,6 +382,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = ("Administrator,Staff,Participant"))]
         public ActionResult ManageAccount(User user)
         {
             ViewData["GenderOptions"] = GenderOptions;
@@ -423,6 +432,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             }
         }
 
+        [Authorize(Roles = ("Administrator,Staff,Participant"))]
         public ActionResult ChangePassword()
         {
             return View();
@@ -432,6 +442,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = ("Administrator,Staff,Participant"))]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (!ModelState.IsValid)

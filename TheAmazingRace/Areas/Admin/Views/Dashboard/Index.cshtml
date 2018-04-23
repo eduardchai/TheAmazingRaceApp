@@ -1,4 +1,18 @@
-﻿
+﻿@using Microsoft.AspNet.Identity;
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Dashboard";
+}
+
+@if (User.Identity.GetMasterRoleName() == "Administrator")
+{
+    @Html.Partial("_Admin");
+}
+else if (User.Identity.GetMasterRoleName() == "Staff")
+{
+    @Html.Partial("_Staff");
+}
+else
+{
+    @Html.Partial("_Participant");
 }
