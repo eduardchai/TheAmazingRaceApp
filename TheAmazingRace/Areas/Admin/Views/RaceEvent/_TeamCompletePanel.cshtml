@@ -88,6 +88,8 @@
         }).always(function (data) {
             if (data.status == 200) {
                 $("#team-control-panel").replaceWith(data.responseText);
+            } else if (data.status == 600) {
+                alert(data.statusText);
             } else {
                 alert("An error has occured. Please try again later!");
             }

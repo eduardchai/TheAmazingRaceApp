@@ -46,5 +46,17 @@ namespace TheAmazingRace.DAL
                 throw;
             }
         }
+
+        public IEnumerable<PitStop> GetPitStopByRaceId(int raceEventId)
+        {
+            try
+            {
+                return dbContext.RaceEventPitStop.Where(r => r.RaceEventId == raceEventId).Select(r => r.PitStop).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
