@@ -468,6 +468,9 @@
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="Areas\Admin\Views\RaceEvent\RaceAlreadyStarted.cshtml" />
     <Content Include="Areas\Admin\Views\RaceEvent\RaceNotYetStarted.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_Admin.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_Staff.cshtml" />
+    <Content Include="Areas\Admin\Views\Dashboard\_Participant.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
