@@ -42,20 +42,31 @@ namespace TheAmazingRace.BLL
             return repo.SaveChanges();
         }
 
-        public bool UpdateStaffLocation(int raceEventId, string staffId, double currLong, double currLat)
+        //updated by dj
+        public bool UpdateStaffLocation(int raceEventId, string userEmail, double currLong, double currLat)
         {
-            var data = repo.GetById(raceEventId, staffId);
-            data.CurrentLong = currLong;
-            data.CurrentLat = currLat;
-
-            repo.Update(data);
-
+            try {
+                User user = userRepo.GetByEmail(userEmail);
+                var data = repo.GetById(raceEventId, user.Id);
+                data.CurrentLong = currLong;
+                data.CurrentLat = currLat;
+                repo.Update(data);
+            } catch (Exception e ) {
+                return false;
+            }
             return repo.SaveChanges();
         }
+
 
         public IEnumerable<User> GetAllStaffsByRaceEventId(int raceEventId)
         {
             return userRepo.GetAllByRaceEventId(raceEventId);
+        }
+
+        //dj
+        public IEnumerable<RaceEventUser> GetEventStaffByRaceEventId(int raceEventId)
+        {
+            return repo.GetUsersByEventId(raceEventId);
         }
     }
 }

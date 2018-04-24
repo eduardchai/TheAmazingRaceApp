@@ -22,5 +22,17 @@ namespace TheAmazingRace.DAL
                 throw;
             }
         }
+
+        public List<RaceEventUser> GetUsersByEventId(int raceEventId)
+        {
+            try
+            {
+                return dbContext.RaceEventUser.Where(r => r.RaceEventId == raceEventId).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

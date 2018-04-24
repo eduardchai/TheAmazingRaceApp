@@ -294,5 +294,60 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         {
             return View();
         }
+
+
+        //dj
+        public JsonResult GetPitStopLocation(int raceEventId)
+        {
+            var data = raceEventPitStopService.GetAllByRaceEventId(raceEventId);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        //dj
+        public JsonResult GetStaffLocation(int raceEventId)
+        {
+            var data = raceEventUserService.GetEventStaffByRaceEventId(raceEventId);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        //dj
+        public JsonResult GetTeamLocation(int raceEventId)
+        {
+            var data = teamService.GetAllByRaceEventId(raceEventId);
+            var team = new List<TeamA>();
+            foreach (Team t in data)
+            {
+                TeamA ta = new TeamA();
+                ta.TeamId = t.Id;
+                ta.Name = t.Name;
+                ta.CurrentLat = t.CurrentLat;
+                ta.CurrentLong = t.CurrentLong;
+                team.Add(ta);
+            }
+
+            return Json(team, JsonRequestBehavior.AllowGet);
+        }
+
+        //dj
+        public JsonResult MessageProcessor(int eventId, int teamId, string staffId, double latitude, double longtitude, string type)
+        {
+            bool result = false;
+            if (type == "team")
+            {
+                result = teamService.UpdateTeamLocation(teamId, longtitude, latitude);
+            }
+            else if (type == "staff")
+            {
+                result = raceEventUserService.UpdateStaffLocation(eventId, staffId, longtitude, latitude);
+            }
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+    }
+    //dj
+    public class TeamA
+    {
+        public int TeamId { get; set; }
+        public string Name { get; set; }
+        public double CurrentLong { get; set; }
+        public double CurrentLat { get; set; }
     }
 }
