@@ -1,0 +1,403 @@
+﻿@{ 
+    var signalRBaseUrl = System.Configuration.ConfigurationManager.AppSettings["signalRServiceBaseUrl"];
+    var signalRHubsUrl = signalRBaseUrl + "/signalR/hubs";
+    var raceEventId = Session["RaceEventId"] != null ? (int)Session["RaceEventId"] : 0;
+}
+
+<p id="map" style="height: 600px !important; width: 100%;"></p>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBqHbZPyZGbYZJ8nsWrn4tv01vALd-mtA&callback=initMap"></script>
+<script src="/Scripts/jquery.signalR-2.2.3.min.js"></script>
+@*<script src="@signalRHubsUrl"></script>*@
+<script>
+
+    var markers = [
+        "/Content/img/blue-25.png",
+        "/Content/img/green-25.png",
+        "/Content/img/purple-25.png",
+        "/Content/img/brown-25.png",
+        "/Content/img/pastel-pink-25.png",
+        "/Content/img/yellow-25.png",
+        "/Content/img/olive-25.png",
+        "/Content/img/pastel-purple-25.png",
+        "/Content/img/cyan-25.png",
+        "/Content/img/pink-25.png",
+        "/Content/img/gold-25.png"
+    ];
+
+    var pitstops = [
+        "/Content/img/pitstop-25-1.png",
+        "/Content/img/pitstop-25-2.png",
+        "/Content/img/pitstop-25-3.png",
+        "/Content/img/pitstop-25-4.png",
+        "/Content/img/pitstop-25-5.png",
+        "/Content/img/pitstop-25-6.png",
+        "/Content/img/pitstop-25-7.png",
+        "/Content/img/pitstop-25-8.png",
+        "/Content/img/pitstop-25-9.png",
+        "/Content/img/pitstop-25-10.png"
+    ];
+
+    var map;
+    var singapore = { lat: 1.3521, lng: 103.8198 };
+    var pitStopMarker = [];
+    var staffMarker = [];
+    var teamMarker = [];
+
+    $(document).ready(function () {
+
+        $.connection.hub.url = "@signalRBaseUrl" + "/signalr";
+
+        var myhub = $.connection.signalRHub;
+        //console.log(myhub);
+        myhub.client.broadcast = function (event, team, x, y, ptStpPass) {
+            //check para here
+            var eventId = 1;
+            var teanid1 = 4;
+            //var staffId1 = "dingjian412@gmail.com";
+            var lat1 = 1.387683;
+            var lng1 = 103.8691;
+            var type1 = "staff";
+            if (isString(staffId1) && isNumber(eventId) && isNumber(lat1) && isNumber(lng1) && isString(type1))
+            {
+                //debugger;
+                MessageProcessor(eventId, teanid1, staffId1, lat1, lng1, type1);
+            }
+
+        };
+
+        $.connection.hub.start().done(function() {
+
+        });
+
+    });
+
+    function MessageProcessor(eventId, teanid1, staffId1, lat1, lng1, type1) {
+        var para = { eventId: eventId, teamId: teanid1, staffId: staffId1, latitude: lat1, longtitude: lng1, type: type1};
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("LocationProcessor", "RaceEvent")',
+            data: JSON.stringify(para),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response.result) {
+                    LoadStaffLocation();
+                    LoadTeamLocation();
+                }
+            },
+            error: function(response) { alert(response.responseText) }
+        });
+    };
+
+    function initMap() {
+
+        var styledMapType = new google.maps.StyledMapType(
+            [
+                {
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#f5f5f5"
+                        }
+                    ]
+                },
+                {
+                    "elementType": "labels.icon",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#616161"
+                        }
+                    ]
+                },
+                {
+                    "elementType": "labels.text.stroke",
+                    "stylers": [
+                        {
+                            "color": "#f5f5f5"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "administrative.land_parcel",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#bdbdbd"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#eeeeee"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#757575"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#e5e5e5"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#9e9e9e"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#ffffff"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#757575"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#dadada"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#616161"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#9e9e9e"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.line",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#e5e5e5"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.station",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#eeeeee"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {
+                            "color": "#c9c9c9"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels.text.fill",
+                    "stylers": [
+                        {
+                            "color": "#9e9e9e"
+                        }
+                    ]
+                }
+            ],
+            { name: 'Styled Map' });
+
+        map = new google.maps.Map(document.getElementById('map'),
+            {
+                center: singapore,
+                zoom: 12
+            });
+
+        map.mapTypes.set('styled_map', styledMapType);
+        map.setMapTypeId('styled_map');
+
+        LoadTeamLocation();
+        LoadPitStopLocation();
+        LoadStaffLocation();
+    };
+
+    function LoadPitStopLocation() {
+        $.get("@Url.Action("GetPitStopLocation", "RaceEvent", new { raceEventId = raceEventId })",
+            function (data) {
+                var contentString = [];
+                var infowindow = [];
+                for (var i = 0; i < data.length; i++) {
+
+                    var iconName = pitstops[i];
+                    contentString[i] = `
+<div>
+    <p><b>Pit Stop #${i + 1} - ${data[i].name}</b></p>
+    <p><b>Challenge:</b></p>
+    <p><i>${data[i].desc}</i></p>
+</div>                    
+                    `;
+
+                    infowindow[i] = new google.maps.InfoWindow({content: contentString[i]});
+                    var mdl = pitStopMarker[i];
+                    if (data[i].name != "")
+                    {
+                        if (data[i].latitude != null && data[i].longitude != null)
+                        {
+                            pitStopMarker[i] = new google.maps.Marker(
+                                {
+                                    position: { lat: parseFloat(data[i].latitude), lng: parseFloat(data[i].longitude) },
+                                    map: map,
+                                    icon: iconName
+                                });
+                            google.maps.event.addListener(pitStopMarker[i],'click', (function (mdl, i){
+                                return function() {
+                                    infowindow[i].open(map, pitStopMarker[i]);
+                                }
+                            })(pitStopMarker[i],i));
+                        }
+                    }
+                }
+            });
+    };
+
+    ////////////////////////////////////
+    function LoadStaffLocation() {
+        $.get("@Url.Action("GetStaffLocation", "RaceEvent", new { raceEventId = raceEventId })",
+            function (data) {
+                var contentString = [];
+                var infowindow = [];
+                ClearStaffMarker();
+                for (var i = 0; i < data.length; i++) {
+
+                    var iconName = "/Content/img/staff-30.png";
+                    contentString[i] = `
+<div>
+    <p><b>${data[i].name}</b></p>
+    <p><b>Location:</b></p>
+    <p>(${data[i].latitude}, ${data[i].longitude})</p>
+</div>                    
+                    `;
+
+                    infowindow[i] = new google.maps.InfoWindow({content: contentString[i]});
+                    var mdl = staffMarker[i];
+                    staffMarker[i] = new google.maps.Marker(
+                        {
+                            position: { lat: parseFloat(data[i].latitude), lng: parseFloat(data[i].longitude) },
+                            map: map,
+                            icon: iconName
+                        });
+                    google.maps.event.addListener(staffMarker[i], 'click', (function (mdl, i) {
+                        return function () {
+                            infowindow[i].open(map, staffMarker[i]);
+                        }
+                    })(staffMarker[i], i));
+                }
+            });
+    };
+
+    function ClearStaffMarker() {
+        //debugger;
+        for (var i = 0; i < staffMarker.length; i++) {
+            staffMarker[i].setMap(null);
+        }
+        staffMarker.length = 0;
+    };
+
+    ////////////////////////////////////
+    function LoadTeamLocation() {
+            $.get("@Url.Action("GetTeamLocation", "RaceEvent", new { raceEventId = raceEventId })",
+                function (data) {
+                var contentString = [];
+                var infowindow = [];
+                ClearTeamMarker();
+                for (var i = 0; i < data.length; i++) {
+                    var iconName = markers[i];
+
+                    contentString[i] = `
+<div>
+    <p><b>${data[i].name}</b></p>
+    <p><b>Location:</b></p>
+    <p>(${data[i].latitude}, ${data[i].longitude})</p>
+</div>                    
+                    `;
+
+                    infowindow[i] = new google.maps.InfoWindow({content: contentString[i]});
+                    var mdl = teamMarker[i];
+                    teamMarker[i] = new google.maps.Marker(
+                        {
+                            position: { lat: parseFloat(data[i].latitude), lng: parseFloat(data[i].longitude) },
+                            map: map,
+                            icon: iconName
+                        });
+                    google.maps.event.addListener(teamMarker[i], 'click', (function (mdl, i) {
+                        return function () {
+                            infowindow[i].open(map, teamMarker[i]);
+                        }
+                    })(teamMarker[i], i));
+                }
+            });
+    };
+    function ClearTeamMarker() {
+        for (var i = 0; i < teamMarker.length; i++) {
+            teamMarker[i].setMap(null);
+        }
+        teamMarker.length = 0;
+    };
+
+    ////////////////////////////////////
+    function isString (value) {
+        return typeof value === 'string' || value instanceof String;
+    };
+    function isNumber (value) {
+        return typeof value === 'number' && isFinite(value);
+    };
+
+</script>

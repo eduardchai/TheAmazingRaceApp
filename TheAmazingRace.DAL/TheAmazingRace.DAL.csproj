@@ -56,6 +56,11 @@
     <Compile Include="BaseRepo.cs" />
     <Compile Include="DbContextFactory.cs" />
     <Compile Include="DBInitializer.cs" />
+    <Compile Include="Migrations\201804221708008_InitialCreate.cs" />
+    <Compile Include="Migrations\201804221708008_InitialCreate.Designer.cs">
+      <DependentUpon>201804221708008_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PitStopRepo.cs" />
     <Compile Include="RaceEventPitStopTeamRepo.cs" />
     <Compile Include="RaceEventRepo.cs" />
@@ -77,6 +82,11 @@
       <Project>{9B04582F-F2BB-4316-9BEF-CD1E08494E21}</Project>
       <Name>TheAmazingRace.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804221708008_InitialCreate.resx">
+      <DependentUpon>201804221708008_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

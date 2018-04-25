@@ -41,18 +41,18 @@
                                             {
                                                 if (item2.CompletedOn != null)
                                                 {
-                                                    <button class="btn btn-success" disabled>@item2.PitStop.PitStopName <br /> @item2.CompletedOn</button>
+                                                    <button class="btn btn-success" style="margin:3px 2px;" disabled>@item2.PitStop.PitStopName <br /> @item2.CompletedOn</button>
                                                 }
                                                 else
                                                 {
                                                     if(count == 0)
                                                     {
                                                         count += 1;
-                                                        <button class="btn btn-info" onclick="completePitStop(@item2.RaceEventId, @item2.PitStopId, @item2.TeamId, @item2.NoOfCompletedStop)">@item2.PitStop.PitStopName <br /> In progress</button>
+                                                        <button class="btn btn-info" style="margin:3px 2px;" onclick="completePitStop(@item2.RaceEventId, @item2.PitStopId, @item2.TeamId, @item2.NoOfCompletedStop)">@item2.PitStop.PitStopName <br /> In progress</button>
                                                     }
                                                     else
                                                     {
-                                                        <button class="btn btn-default" disabled>@item2.PitStop.PitStopName <br /> &nbsp;</button>
+                                                        <button class="btn btn-default" style="margin:3px 2px;" disabled>@item2.PitStop.PitStopName <br /> &nbsp;</button>
                                                     }
                                                 }
                                             }
