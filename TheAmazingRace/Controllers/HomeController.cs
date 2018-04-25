@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TheAmazingRace.BLL;
 
 namespace TheAmazingRace.Controllers
 {
     public class HomeController : Controller
     {
+        private RaceEventService raceEventService = new RaceEventService();
+
         public ActionResult Index()
         {
-            return View();
-        }
+            var race = raceEventService.GetMostRecentEvent();
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            if (race == null)
+            {
+                TempData["HasLiveEvent"] = false;
+            }
+            else
+            {
+                TempData["HasLiveEvent"] = true;
+            }
             return View();
         }
     }

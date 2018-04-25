@@ -22,5 +22,17 @@ namespace TheAmazingRace.DAL
                 throw;
             }
         }
+
+        public RaceEvent GetMostRecentEvent()
+        {
+            try
+            {
+                return dbContext.RaceEvent.Where(r => r.EventDate < DateTime.Now).OrderBy(r => r.EventDate).First();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }

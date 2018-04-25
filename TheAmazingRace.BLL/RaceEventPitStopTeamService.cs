@@ -11,6 +11,8 @@ namespace TheAmazingRace.BLL
     public class RaceEventPitStopTeamService : BaseService<RaceEventPitStopTeam>
     {
         private RaceEventPitStopTeamRepo repo = new RaceEventPitStopTeamRepo();
+        private RaceEventPitStopRepo raceEventPitStopRepo = new RaceEventPitStopRepo();
+        private TeamRepo teamRepo = new TeamRepo();
 
         public RaceEventPitStopTeamService()
         {
@@ -35,6 +37,13 @@ namespace TheAmazingRace.BLL
             data.TeamId = teamId;
             data.CompletedOn = DateTime.Now;
             data.NoOfCompletedStop = currentPitStopOrder;
+
+            var team = teamRepo.GetById(teamId);
+            var pitStops = raceEventPitStopRepo.GetPitStopByRaceId(raceEventId).ToList();
+            if (currentPitStopOrder == pitStops.Count)
+            {
+                team.DistanceToNextStop = 0;
+            }
 
             repo.Add(data);
 

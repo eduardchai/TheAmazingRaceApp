@@ -104,5 +104,17 @@ namespace TheAmazingRace.DAL
                 throw;
             }
         }
+
+        public User GetByEmail(string email)
+        {
+            try
+            {
+                return dbContext.Users.Where(u => u.Email == email).First();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

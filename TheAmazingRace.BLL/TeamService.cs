@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Device.Location;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace TheAmazingRace.BLL
     {
         private TeamRepo repo = new TeamRepo();
         private UserRepo userRepo = new UserRepo();
+        private RaceEventPitStopRepo raceEventPitStopRepo = new RaceEventPitStopRepo();
+        private RaceEventPitStopTeamRepo raceEventPitStopTeamRepo = new RaceEventPitStopTeamRepo();
 
         public TeamService()
         {
@@ -84,6 +87,24 @@ namespace TheAmazingRace.BLL
             var team = GetById(teamId);
             team.CurrentLong = currLong;
             team.CurrentLat = currLat;
+
+            var noOfCompletedPit = raceEventPitStopTeamRepo.GetNoOfCompletedPit((int)team.RaceEventId, team.Id);
+            var pitStops = raceEventPitStopRepo.GetPitStopByRaceId((int)team.RaceEventId).ToList();
+
+            if (noOfCompletedPit < pitStops.Count)
+            {
+                var currPitStop = pitStops[noOfCompletedPit];
+
+                var pitStopGeoLoc = new GeoCoordinate(currPitStop.Latitude, currPitStop.Longitude);
+                var teamGeoLoc = new GeoCoordinate(team.CurrentLat, team.CurrentLong);
+
+                double distance = pitStopGeoLoc.GetDistanceTo(teamGeoLoc);
+
+                team.DistanceToNextStop = Math.Round(distance / 1000, 3);
+            } else
+            {
+                team.DistanceToNextStop = 0;
+            }
 
             repo.Update(team);
 

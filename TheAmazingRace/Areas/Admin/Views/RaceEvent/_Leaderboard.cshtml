@@ -2,8 +2,10 @@
 
 @{ 
     var rank = 0;
+    var raceEventId = 0;
 }
-<div>
+
+<div id="leaderboard">
     <div class="box box-warning">
         <div class="box-header with-border">
             <h3 class="box-title">Leaderboard</h3>
@@ -17,9 +19,12 @@
                             <th>Rank</th>
                             <th>Team Name</th>
                             <th>Team Member</th>
+                            <th style="text-align:right;">Distance to Next Stop</th>
                         </tr>
                         @foreach (var item in Model)
                         {
+                            raceEventId = item.RaceEventId;
+
                             <tr>
                                 <td>@(rank += 1)</td>
                                 <td>@item.Team.Name</td>
@@ -29,6 +34,7 @@
                                         <img src="@member.PhotoUrl" class="img-circle" style="width:40px; margin:3px 5px;">
                                     }
                                 </td>
+                                <td style="text-align:right;">@item.Team.DistanceToNextStop km</td>
                             </tr>
                         }
                     </table>
@@ -39,3 +45,29 @@
         <!-- /.box-body -->
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var raceEventId = @raceEventId;
+
+            var payload = {
+                raceEventId
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/RaceEvent/_Leaderboard",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(payload)
+            }).always(function (data) {
+                if (data.status == 200) {
+                    $("#leaderboard").replaceWith(data.responseText);
+                } else {
+                    console.log("An error has occured. Please try again later!");
+                }
+            });
+        }, 10000);
+    });
+</script>

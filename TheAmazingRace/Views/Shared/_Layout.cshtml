@@ -13,18 +13,21 @@
     @Styles.Render("~/Content/main-css")
     @Scripts.Render("~/bundles/modernizr")
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/main-js")
 </head>
 <body>
     <!-- Nav -->
-    <nav id="nav" class="navbar nav-transparent">
+    <nav id="nav" class="navbar nav-transparent" style="min-height: 70px;">
         <div class="container">
 
             <div class="navbar-header">
                 <!-- Logo -->
-                <div class="navbar-brand">
+                <div class="navbar-brand" style="margin-top:10px;">
                     <a href="@Url.Action("Index", "Home")">
-                        <img class="logo" src="../../Content/img/logo.png" alt="logo">
-                        <img class="logo-alt" src="../../Content/img/logo-alt.png" alt="logo">
+                        <img style="max-height: 50px;" class="logo" src="../../Content/img/amazing-race-running-logo-transparent.png" alt="logo">
+                        <img style="max-height: 70px;" class="logo-alt" src="../../Content/img/amazing-race-running-logo-transparent.png" alt="logo">
                     </a>
                 </div>
                 <!-- /Logo -->
@@ -36,10 +39,9 @@
             </div>
 
             <!--  Main navigation  -->
-            <ul class="main-nav nav navbar-nav navbar-right">
+            <ul class="main-nav nav navbar-nav navbar-right" style="margin-top:10px;">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#live-event">Live Event</a></li>
                 @Html.Partial("_LoginPartial")
             </ul>
             <!-- /Main navigation -->
@@ -63,7 +65,7 @@
 
                     <!-- footer logo -->
                     <div class="footer-logo">
-                        <a href="index.html"><img src="../../Content/img/logo-alt.png" alt="logo"></a>
+                        <img src="../../Content/img/logo.jpeg" alt="logo">
                     </div>
                     <!-- /footer logo -->
                     <!-- footer follow -->
@@ -106,9 +108,6 @@
     </div>
     <!-- /Preloader -->
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/main-js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

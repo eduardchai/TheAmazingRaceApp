@@ -44,5 +44,10 @@ namespace TheAmazingRace.BLL
 
             return repo.SaveChanges();
         }
+
+        public RaceEvent GetMostRecentEvent()
+        {
+            return repo.GetMostRecentEvent();
+        }
     }
 }

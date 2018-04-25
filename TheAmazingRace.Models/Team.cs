@@ -23,10 +23,12 @@ namespace TheAmazingRace.Models
 
         public int? RaceEventId { get; set; }
 
-        public virtual RaceEvent Event { get; set; }
+        public virtual RaceEvent RaceEvent { get; set; }
 
         public double CurrentLong { get; set; }
         public double CurrentLat { get; set; }
+
+        public double DistanceToNextStop { get; set; }
 
         [Display(Name = "Created On")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy HH:mm:ss}", ApplyFormatInEditMode = true)]

@@ -41,7 +41,8 @@ TBL_C AS (
 		t.Id AS TeamId,
 		b.PitStopId,
 		ISNULL(b.CompletedOn, '1970-01-01 00:00:00') as CompletedOn,
-		b.NoOfCompletedStop
+		b.NoOfCompletedStop,
+		t.DistanceToNextStop
 	FROM dbo.Team AS t
 	LEFT JOIN TBL_B AS b ON t.RaceEventId = b.RaceEventId AND t.Id = b.TeamId)
 
@@ -53,7 +54,7 @@ SELECT
 	ISNULL(NoOfCompletedStop, 0) as NoOfCompletedStop
 FROM TBL_C
 WHERE RaceEventId = {0}
-ORDER BY RaceEventId, NoOfCompletedStop DESC, CompletedOn
+ORDER BY RaceEventId, NoOfCompletedStop DESC, DistanceToNextStop, CompletedOn
             ", raceEventId);
 
             try
@@ -89,6 +90,20 @@ ORDER BY B.Id, A.[Order]
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        public int GetNoOfCompletedPit(int raceEventId, int teamId)
+        {
+            try
+            {
+                var raceEventPitStopTeam = dbContext.RaceEventPitStopTeam.Where(r => r.RaceEventId == raceEventId && r.TeamId == teamId).OrderByDescending(r => r.NoOfCompletedStop).First();
+
+                return raceEventPitStopTeam.NoOfCompletedStop;
+            }
+            catch
+            {
+                return 0;
             }
         }
     }

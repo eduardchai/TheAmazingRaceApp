@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using TheAmazingRace.Controllers;
 using TheAmazingRace.BLL;
+using System.Device;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
@@ -95,7 +96,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
                 if (model.EventDate < DateTime.Now)
                 {
-                    return RaceAlreadyStarted();
+                    return RedirectToAction("RaceAlreadyStarted", "RaceEVent");
                 }
 
                 return View(model);
@@ -267,6 +268,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             return PartialView("_TeamCompletePanel", models);
         }
 
+        [AllowAnonymous]
         public ActionResult _Leaderboard(int raceEventId)
         {
             var models = raceEventPitStopTeamService.GetLeaderboard(raceEventId);
@@ -293,6 +295,96 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         public ActionResult RaceNotYetStarted()
         {
             return View();
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetPitStopLocation(int raceEventId)
+        {
+            var data = raceEventPitStopService.GetAllByRaceEventId(raceEventId);
+            var pitstops = new List<Object>();
+
+            foreach(var r in data)
+            {
+                pitstops.Add(new
+                {
+                    name = r.PitStop.PitStopName,
+                    desc = r.PitStop.ChallengeDescription,
+                    address = r.PitStop.Address,
+                    latitude = r.PitStop.Latitude,
+                    longitude = r.PitStop.Longitude
+                });
+            }
+
+            return Json(pitstops, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetStaffLocation(int raceEventId)
+        {
+            var data = raceEventUserService.GetEventStaffByRaceEventId(raceEventId);
+            var staffs = new List<Object>();
+
+            foreach (RaceEventUser race in data)
+            {
+                staffs.Add(new
+                {
+                    name = race.User.Name,
+                    latitude = race.CurrentLat,
+                    longitude = race.CurrentLong
+                });
+            }
+
+            return Json(staffs, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetTeamLocation(int raceEventId)
+        {
+            var data = teamService.GetAllByRaceEventId(raceEventId);
+            var teams = new List<Object>();
+            foreach (Team t in data)
+            {
+                teams.Add(new
+                {
+                    teamId = t.Id,
+                    name = t.Name,
+                    latitude = t.CurrentLat,
+                    longitude = t.CurrentLong
+                });
+            }
+
+            return Json(teams, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public JsonResult LocationProcessor(int eventId, int teamId, string staffId, double latitude, double longtitude, string type)
+        {
+            bool result = false;
+            if (type == "team")
+            {
+                result = teamService.UpdateTeamLocation(teamId, longtitude, latitude);
+            }
+            else if (type == "staff")
+            {
+                result = raceEventUserService.UpdateStaffLocation(eventId, staffId, longtitude, latitude);
+            }
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GetPublicMap()
+        {
+            var race = raceEventService.GetMostRecentEvent();
+            Session["RaceEventId"] = race.Id;
+            return PartialView("_EventMap");
+        }
+
+        [AllowAnonymous]
+        public ActionResult GetPublicLeaderboard()
+        {
+            var race = raceEventService.GetMostRecentEvent();
+            Session["RaceEventId"] = race.Id;
+            return _Leaderboard(1);
         }
     }
 }
