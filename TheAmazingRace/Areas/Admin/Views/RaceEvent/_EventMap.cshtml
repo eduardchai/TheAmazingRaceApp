@@ -50,20 +50,29 @@
 
         var myhub = $.connection.signalRHub;
         //console.log(myhub);
-        myhub.client.broadcast = function (event, team, x, y, ptStpPass) {
-            //check para here
-            var eventId = 1;
-            var teanid1 = 4;
-            //var staffId1 = "dingjian412@gmail.com";
-            var lat1 = 1.387683;
-            var lng1 = 103.8691;
-            var type1 = "staff";
-            if (isString(staffId1) && isNumber(eventId) && isNumber(lat1) && isNumber(lng1) && isString(type1))
-            {
-                //debugger;
-                MessageProcessor(eventId, teanid1, staffId1, lat1, lng1, type1);
-            }
+        myhub.client.broadcast = function (event, team, latitude, longitude, type,email) {
+            console.log("event", event);
+            console.log("team", team);
+            console.log("latitude", latitude);
+            console.log("longitude", longitude);
+            console.log("type", type);
+            console.log("email", email);
 
+            //check para here
+            //debugger;
+            //var eventId = 1;
+            //var teanid1 = 4;
+            //var staffId1 = "dingjian412@gmail.com";
+            //var lat1 = 1.387683;
+            //var lng1 = 103.8691;
+            //var type1 = "staff";
+            //if (isString(staffId1) && isNumber(eventId) && isNumber(lat1) && isNumber(lng1) && isString(type1))
+            //{
+            //    //debugger;
+            //    MessageProcessor(eventId, teanid1, staffId1, lat1, lng1, type1);
+            //}
+
+            MessageProcessor(event, team, email, latitude, longitude, type);
         };
 
         $.connection.hub.start().done(function() {
@@ -72,8 +81,8 @@
 
     });
 
-    function MessageProcessor(eventId, teanid1, staffId1, lat1, lng1, type1) {
-        var para = { eventId: eventId, teamId: teanid1, staffId: staffId1, latitude: lat1, longtitude: lng1, type: type1};
+    function MessageProcessor(eventId, teamId, staffId1, lat1, lng1, type1) {
+        var para = { eventId: eventId, teamId: teamId, staffId: staffId1, latitude: lat1, longtitude: lng1, type: type1};
         $.ajax({
             type: "POST",
             url: '@Url.Action("LocationProcessor", "RaceEvent")',
