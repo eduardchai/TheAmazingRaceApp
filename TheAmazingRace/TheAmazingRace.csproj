@@ -280,6 +280,7 @@
     <Content Include="Content\img\logo-alt.png" />
     <Content Include="Content\img\logo.jpeg" />
     <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\no-broadcast.png" />
     <Content Include="Content\img\olive-25.png" />
     <Content Include="Content\img\olive.png" />
     <Content Include="Content\img\pastel-pink-25.png" />
@@ -500,6 +501,8 @@
     <Content Include="Areas\Admin\Views\Dashboard\_Staff.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\_Participant.cshtml" />
     <Content Include="Areas\Admin\Views\RaceEvent\_EventMap.cshtml" />
+    <None Include="Properties\PublishProfiles\TheAmazingRaceApp - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\TheAmazingRaceApp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

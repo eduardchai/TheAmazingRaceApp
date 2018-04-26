@@ -360,11 +360,11 @@ namespace TheAmazingRace.Areas.Admin.Controllers
         public JsonResult LocationProcessor(int eventId, int teamId, string staffId, double latitude, double longtitude, string type)
         {
             bool result = false;
-            if (type == "team")
+            if (type == "TEAM")
             {
                 result = teamService.UpdateTeamLocation(teamId, longtitude, latitude);
             }
-            else if (type == "staff")
+            else if (type == "STAFF")
             {
                 result = raceEventUserService.UpdateStaffLocation(eventId, staffId, longtitude, latitude);
             }
