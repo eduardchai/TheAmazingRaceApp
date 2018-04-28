@@ -1,9 +1,19 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-
-@{
+﻿@{
     ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div style="text-align:center">
+    <div class="error-content">
+        <h3><i class="fa fa-warning text-red"></i> Oops! Something went wrong.</h3>
 
+        <p>
+            An error has occurred. Please try again later.
+        </p>
+
+        <p>Contact Administrator if the problem persists.</p>
+        <br />
+
+        <a href="@Url.Action("Index", "Home", new { areas = "" })" class="btn btn-primary">Return to Homepage</a>
+    </div>
+</div>

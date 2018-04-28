@@ -1,14 +1,12 @@
-﻿@{ 
-    var signalRBaseUrl = System.Configuration.ConfigurationManager.AppSettings["signalRServiceBaseUrl"];
+﻿@{
+    var signalRBaseUrl = System.Configuration.ConfigurationManager.AppSettings["SignalRServiceBaseUrl"];
     var signalRHubsUrl = signalRBaseUrl + "/signalR/hubs";
     var raceEventId = Session["RaceEventId"] != null ? (int)Session["RaceEventId"] : 0;
+    var isHubOnline = Session["IsHubOnline"] != null ? (bool)Session["IsHubOnline"] : false;
 }
 
 <p id="map" style="height: 600px !important; width: 100%;"></p>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBqHbZPyZGbYZJ8nsWrn4tv01vALd-mtA&callback=initMap"></script>
-<script src="/Scripts/jquery.signalR-2.2.3.min.js"></script>
-@*<script src="@signalRHubsUrl"></script>*@
 <script>
 
     var markers = [
@@ -45,43 +43,32 @@
     var teamMarker = [];
 
     $(document).ready(function () {
+        var isHubOnline = "@isHubOnline";
 
-        $.connection.hub.url = "@signalRBaseUrl" + "/signalr";
+        if (isHubOnline.toLowerCase() != "false") {
+            $.connection.hub.url = "@signalRBaseUrl" + "/signalr";
+            var myhub = $.connection.signalRHub;
+            myhub.client.broadcast = function (event, team, latitude, longitude, type, email) {
 
-        var myhub = $.connection.signalRHub;
-        //console.log(myhub);
-        myhub.client.broadcast = function (event, team, latitude, longitude, type,email) {
-            console.log("event", event);
-            console.log("team", team);
-            console.log("latitude", latitude);
-            console.log("longitude", longitude);
-            console.log("type", type);
-            console.log("email", email);
+                if (type.toLowerCase() == "team") {
+                    if (isNumber(event) && isNumber(team) && isNumber(latitude) && isNumber(longitude) && isString(type)) {
+                        LocationProcessor(event, team, "", latitude, longitude, type);
+                    }
+                } else if (type.toLowerCase() == "staff") {
+                    if (isNumber(event) && isNumber(latitude) && isNumber(longitude) && isString(type) && isString(email)) {
+                        LocationProcessor(event, 0, email, latitude, longitude, type);
+                    }
+                }
 
-            //check para here
-            //debugger;
-            //var eventId = 1;
-            //var teanid1 = 4;
-            //var staffId1 = "dingjian412@gmail.com";
-            //var lat1 = 1.387683;
-            //var lng1 = 103.8691;
-            //var type1 = "staff";
-            //if (isString(staffId1) && isNumber(eventId) && isNumber(lat1) && isNumber(lng1) && isString(type1))
-            //{
-            //    //debugger;
-            //    MessageProcessor(eventId, teanid1, staffId1, lat1, lng1, type1);
-            //}
+            };
 
-            MessageProcessor(event, team, email, latitude, longitude, type);
-        };
+            $.connection.hub.start().done(function() {
 
-        $.connection.hub.start().done(function() {
-
-        });
-
+            });
+        }
     });
 
-    function MessageProcessor(eventId, teamId, staffId1, lat1, lng1, type1) {
+    function LocationProcessor(eventId, teamId, staffId1, lat1, lng1, type1) {
         var para = { eventId: eventId, teamId: teamId, staffId: staffId1, latitude: lat1, longtitude: lng1, type: type1};
         $.ajax({
             type: "POST",
@@ -291,7 +278,7 @@
     <p><b>Pit Stop #${i + 1} - ${data[i].name}</b></p>
     <p><b>Challenge:</b></p>
     <p><i>${data[i].desc}</i></p>
-</div>                    
+</div>
                     `;
 
                     infowindow[i] = new google.maps.InfoWindow({content: contentString[i]});
@@ -332,7 +319,7 @@
     <p><b>${data[i].name}</b></p>
     <p><b>Location:</b></p>
     <p>(${data[i].latitude}, ${data[i].longitude})</p>
-</div>                    
+</div>
                     `;
 
                     infowindow[i] = new google.maps.InfoWindow({content: contentString[i]});
@@ -375,7 +362,7 @@
     <p><b>${data[i].name}</b></p>
     <p><b>Location:</b></p>
     <p>(${data[i].latitude}, ${data[i].longitude})</p>
-</div>                    
+</div>
                     `;
 
                     infowindow[i] = new google.maps.InfoWindow({content: contentString[i]});
@@ -410,3 +397,11 @@
     };
 
 </script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBqHbZPyZGbYZJ8nsWrn4tv01vALd-mtA&callback=initMap"></script>
+
+@if (isHubOnline)
+{
+    <script src="/Scripts/jquery.signalR-2.2.3.min.js"></script>
+    <script src="@signalRHubsUrl"></script>
+}

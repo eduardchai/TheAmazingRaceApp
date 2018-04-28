@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using TheAmazingRace.Controllers;
 using TheAmazingRace.BLL;
 using System.Device;
+using System.Net;
 
 namespace TheAmazingRace.Areas.Admin.Controllers
 {
@@ -275,6 +276,12 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             return PartialView("_Leaderboard", models);
         }
 
+        public ActionResult _EventMap()
+        {
+            Session["IsHubOnline"] = IsHubOnline();
+            return PartialView("_EventMap");
+        }
+
         [HttpPost]
         public ActionResult CompletePitStop(int raceEventId, int pitStopId, int teamId, int currentPitStopOrder)
         {
@@ -371,11 +378,35 @@ namespace TheAmazingRace.Areas.Admin.Controllers
             return Json(new { result }, JsonRequestBehavior.AllowGet);
         }
 
+        public bool IsHubOnline()
+        {
+            var signalHubUrl = System.Configuration.ConfigurationManager.AppSettings["SignalRServiceBaseUrl"];
+            var isHubOnline = false;
+
+            try
+            {
+                HttpWebRequest httpReq = (HttpWebRequest)WebRequest.Create(signalHubUrl);
+                httpReq.AllowAutoRedirect = false;
+
+                HttpWebResponse httpRes = (HttpWebResponse)httpReq.GetResponse();
+
+                if (httpRes.StatusCode == HttpStatusCode.OK)
+                {
+                    isHubOnline = true;
+                }
+            }
+            catch (Exception) { }
+
+            return isHubOnline;
+        }
+
         [AllowAnonymous]
         public ActionResult GetPublicMap()
         {
             var race = raceEventService.GetMostRecentEvent();
             Session["RaceEventId"] = race.Id;
+            Session["IsHubOnline"] = IsHubOnline();
+
             return PartialView("_EventMap");
         }
 
