@@ -45,7 +45,6 @@ namespace TheAmazingRace
             bundles.Add(new StyleBundle("~/Content/main-css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/text-align-bs.css",
-                      "~/Content/font-awesome/font-awesome.min.css",
                       "~/Content/owl.carousel.css",
                       "~/Content/owl.theme.default.css",
                       "~/Content/magnific-popup.css",
@@ -54,7 +53,6 @@ namespace TheAmazingRace
             bundles.Add(new StyleBundle("~/Content/admin-css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/text-align-bs.css",
-                      "~/Content/font-awesome/font-awesome.min.css",
                       "~/Content/admin/AdminLTE.css",
                       "~/Content/admin/skins/skin-blue.css",
                       "~/Content/admin/dataTables.bootstrap.min.css",

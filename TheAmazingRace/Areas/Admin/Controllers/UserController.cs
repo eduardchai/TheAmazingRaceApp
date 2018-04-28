@@ -68,10 +68,23 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 if (file.ContentLength > 0)
                 {
                     var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
-                    file.SaveAs(path);
 
-                    model.AppUser.PhotoUrl = "/UploadedImages/" + filename;
+                    if (System.Configuration.ConfigurationManager.AppSettings["StorageAccountName"] != null)
+                    {
+                        var azureUploadLocation = await StorageHelper.UploadFileToStorage(file.InputStream, filename);
+
+                        if (azureUploadLocation != null)
+                        {
+                            model.AppUser.PhotoUrl = azureUploadLocation;
+                        }
+                    }
+                    else
+                    {
+                        var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
+                        file.SaveAs(path);
+
+                        model.AppUser.PhotoUrl = "/UploadedImages/" + filename;
+                    }
                 }
 
                 model.AppUser.UserName = model.Email;
@@ -277,7 +290,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = ("Administrator,Staff"))]
-        public ActionResult Edit(User user)
+        public async Task<ActionResult> Edit(User user)
         {
             try
             {
@@ -294,17 +307,30 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 if (file.ContentLength > 0)
                 {
                     var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
-                    file.SaveAs(path);
 
-                    newUser.PhotoUrl = "/UploadedImages/" + filename;
+                    if (System.Configuration.ConfigurationManager.AppSettings["StorageAccountName"] != null)
+                    {
+                        var azureUploadLocation = await StorageHelper.UploadFileToStorage(file.InputStream, filename);
+
+                        if (azureUploadLocation != null)
+                        {
+                            newUser.PhotoUrl = azureUploadLocation;
+                        }
+                    }
+                    else
+                    {
+                        var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
+                        file.SaveAs(path);
+
+                        newUser.PhotoUrl = "/UploadedImages/" + filename;
+                    }
                 }
 
                 userService.Update(newUser);
                 TempData["MessageAlert"] = new Alert { CssClass = "alert-success", Title = "Success!", Message = RoleName + " is successfully updated." };
                 return RedirectToAction("Edit", new { id = user.Id });
             }
-            catch
+            catch(Exception ex)
             {
                 ViewData["GenderOptions"] = GenderOptions;
                 return View(user);
@@ -383,7 +409,7 @@ namespace TheAmazingRace.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = ("Administrator,Staff,Participant"))]
-        public ActionResult ManageAccount(User user)
+        public async Task<ActionResult> ManageAccount(User user)
         {
             ViewData["GenderOptions"] = GenderOptions;
 
@@ -402,10 +428,23 @@ namespace TheAmazingRace.Areas.Admin.Controllers
                 if (file.ContentLength > 0)
                 {
                     var filename = Guid.NewGuid() + "-" + Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
-                    file.SaveAs(path);
 
-                    newUser.PhotoUrl = "/UploadedImages/" + filename;
+                    if (System.Configuration.ConfigurationManager.AppSettings["StorageAccountName"] != null)
+                    {
+                        var azureUploadLocation = await StorageHelper.UploadFileToStorage(file.InputStream, filename);
+
+                        if (azureUploadLocation != null)
+                        {
+                            newUser.PhotoUrl = azureUploadLocation;
+                        }
+                    }
+                    else
+                    {
+                        var path = Path.Combine(Server.MapPath("~/UploadedImages"), filename);
+                        file.SaveAs(path);
+
+                        newUser.PhotoUrl = "/UploadedImages/" + filename;
+                    }
                 }
 
                 userService.Update(newUser);

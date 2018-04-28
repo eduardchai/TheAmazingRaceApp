@@ -27,7 +27,7 @@ namespace TheAmazingRace
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("noreply@u.nus.edu", "The Amazing Race Singapore");
             var subject = message.Subject;
-            var to = new EmailAddress("eduard.anthony.chai@gmail.com", "Eduard Chai");
+            var to = new EmailAddress(message.Destination, "Eduard Chai");
             var plainTextContent = message.Body;
             var htmlContent = message.Body;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);

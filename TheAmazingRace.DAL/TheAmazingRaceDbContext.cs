@@ -11,7 +11,7 @@ namespace TheAmazingRace.DAL
         public TheAmazingRaceDbContext()
             : base("name=DefaultConnection")
         {
-
+            Database.SetInitializer<TheAmazingRaceDbContext>(new DBInitializer());
         }
 
         public static TheAmazingRaceDbContext Create()
