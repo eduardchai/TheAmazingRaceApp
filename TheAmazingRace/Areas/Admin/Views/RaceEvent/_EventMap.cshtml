@@ -9,31 +9,62 @@
 
 <script>
 
+    // Uncomment this to use local images version
+
+    //var markers = [
+    //    "/Content/img/blue-25.png",
+    //    "/Content/img/green-25.png",
+    //    "/Content/img/purple-25.png",
+    //    "/Content/img/brown-25.png",
+    //    "/Content/img/pastel-pink-25.png",
+    //    "/Content/img/yellow-25.png",
+    //    "/Content/img/olive-25.png",
+    //    "/Content/img/pastel-purple-25.png",
+    //    "/Content/img/cyan-25.png",
+    //    "/Content/img/pink-25.png",
+    //    "/Content/img/gold-25.png"
+    //];
+
+    //var pitstops = [
+    //    "/Content/img/pitstop-25-1.png",
+    //    "/Content/img/pitstop-25-2.png",
+    //    "/Content/img/pitstop-25-3.png",
+    //    "/Content/img/pitstop-25-4.png",
+    //    "/Content/img/pitstop-25-5.png",
+    //    "/Content/img/pitstop-25-6.png",
+    //    "/Content/img/pitstop-25-7.png",
+    //    "/Content/img/pitstop-25-8.png",
+    //    "/Content/img/pitstop-25-9.png",
+    //    "/Content/img/pitstop-25-10.png"
+    //];
+
+    // Comment this if the cloud hosted one already unavailable
+
     var markers = [
-        "/Content/img/blue-25.png",
-        "/Content/img/green-25.png",
-        "/Content/img/purple-25.png",
-        "/Content/img/brown-25.png",
-        "/Content/img/pastel-pink-25.png",
-        "/Content/img/yellow-25.png",
-        "/Content/img/olive-25.png",
-        "/Content/img/pastel-purple-25.png",
-        "/Content/img/cyan-25.png",
-        "/Content/img/pink-25.png",
-        "/Content/img/gold-25.png"
+        "https://amazingrace.blob.core.windows.net/userprofiles/blue-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/green-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/purple-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/brown-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pastel-pink-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/yellow-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/olive-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pastel-purple-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/cyan-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pink-25.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/gold-25.png"
     ];
 
     var pitstops = [
-        "/Content/img/pitstop-25-1.png",
-        "/Content/img/pitstop-25-2.png",
-        "/Content/img/pitstop-25-3.png",
-        "/Content/img/pitstop-25-4.png",
-        "/Content/img/pitstop-25-5.png",
-        "/Content/img/pitstop-25-6.png",
-        "/Content/img/pitstop-25-7.png",
-        "/Content/img/pitstop-25-8.png",
-        "/Content/img/pitstop-25-9.png",
-        "/Content/img/pitstop-25-10.png"
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-1.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-2.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-3.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-4.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-5.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-6.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-7.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-8.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-9.png",
+        "https://amazingrace.blob.core.windows.net/userprofiles/pitstop-25-10.png"
     ];
 
     var map;

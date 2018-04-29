@@ -12,12 +12,22 @@ namespace TheAmazingRace.DAL
 {
     public class DBInitializer : CreateDatabaseIfNotExists<TheAmazingRaceDbContext>
     {
+        // Uncomment this to use local images version
+        //List<string> picts = new List<string> {
+        //    "/Content/img/avatar.png",
+        //    "/Content/img/avatar0.png",
+        //    "/Content/img/avatar04.png",
+        //    "/Content/img/avatar2.png",
+        //    "/Content/img/avatar3.png"
+        //};
+
+        // Comment this if the cloud hosted one already unavailable
         List<string> picts = new List<string> {
-            "/Content/img/avatar.png",
-            "/Content/img/avatar0.png",
-            "/Content/img/avatar04.png",
-            "/Content/img/avatar2.png",
-            "/Content/img/avatar3.png"
+            "https://amazingrace.blob.core.windows.net/userprofiles/avatar.png",
+            "https://amazingrace.blob.core.windows.net/userprofiles/avatar0.png",
+            "https://amazingrace.blob.core.windows.net/userprofiles/avatar04.png",
+            "https://amazingrace.blob.core.windows.net/userprofiles/avatar2.png",
+            "https://amazingrace.blob.core.windows.net/userprofiles/avatar3.png"
         };
 
         Random rand = new Random(DateTime.Now.ToString().GetHashCode());
